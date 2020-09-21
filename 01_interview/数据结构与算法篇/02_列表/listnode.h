@@ -4,9 +4,10 @@
  * @@Company: SUNRI
  * @Author: Allen zhuang
  * @Date: 2020-09-21 11:13:25
- * @LastEditors: Allen zhuang
- * @LastEditTime: 2020-09-21 12:27:58
+ * @LastEditors: Allen Zhuang
+ * @LastEditTime: 2020-09-21 18:54:47
  */
+
 #include <stddef.h>
 using namespace std;
 typedef int Rank;                     //秩

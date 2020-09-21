@@ -4,8 +4,8 @@
  * @Company: SUNRI
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:10:21
- * @LastEditors: Allen zhuang
- * @LastEditTime: 2020-09-21 15:11:51
+ * @LastEditors: Allen Zhuang
+ * @LastEditTime: 2020-09-22 04:06:01
  */
 #include "listnode.h"
 
@@ -19,7 +19,7 @@ private:
 
 protected:
     void init();
-    int clear();
+    int  clear();
     void copyNodes(ListNodePosi(T), int);
     void merge(ListNodePosi(T)&, int, myList<T>&, ListNodePosi(T), int);
     void mergrSort(ListNodePosi(T)&, int);
@@ -33,7 +33,7 @@ public:
     myList(const myList<T>& L, Rank r, int n);
     myList(ListNodePosi(T) p, int n);
     //析构函数
-    ～myList();
+    ~myList();
     //只读访问接口
     Rank size() const { return _size; }
     bool empty() const { return _size<=0; }
@@ -60,8 +60,8 @@ public:
     void merge(myList<T>& L){ merge(first(), _size, L, L.first(), L._size); }
     void sort(ListNodePosi(T) p, int n);
     void sort() { sort(first(), _size); }
-    void deduplicate();
-    void uniquify();
+    int  deduplicate();
+    int  uniquify();
     void reverse();
     //遍历
     void traverse(void (*)(T&)); //遍历,依次实施visit操作(函数指针,只读或局部性修改)
