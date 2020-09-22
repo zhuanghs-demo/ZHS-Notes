@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:10:21
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 04:06:01
+ * @LastEditTime: 2020-09-22 10:30:17
  */
 #include "listnode.h"
 
@@ -22,7 +22,7 @@ protected:
     int  clear();
     void copyNodes(ListNodePosi(T), int);
     void merge(ListNodePosi(T)&, int, myList<T>&, ListNodePosi(T), int);
-    void mergrSort(ListNodePosi(T)&, int);
+    void mergeSort(ListNodePosi(T)&, int);
     void selectionSort(ListNodePosi(T), int);
     void insertSort(ListNodePosi(T), int);
 

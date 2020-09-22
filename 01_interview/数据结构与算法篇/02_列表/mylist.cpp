@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:15:55
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 05:22:06
+ * @LastEditTime: 2020-09-22 11:19:41
  */
 #include "mylist.h"
 
@@ -241,5 +241,36 @@ ListNodePosi(T) myList<T>::selectMax(ListNodePosi(T) p, int n)
         }
     }
     return max;
+}
+
+template<typename T>
+void myList<T>::merge(ListNodePosi(T)& p, int n, myList<T>& L, ListNodePosi(T) q, int m)
+{
+    ListNodePosi(T) pp = p->pred;
+    while(0 < m){
+        if(0 < n && p->data <= q->data){
+            if(q == (p = p->succ) ) break;
+            n--;
+        }else{
+            insertBefore( p, L.remove((q = q->succ)->pred) );
+            m--;
+        }
+    }
+    p = pp->succ;
+}
+
+template<typename T>
+void myList<T>::mergeSort(ListNodePosi(T)& p, int n)
+{
+    if(n < 2) return;
+    int m = n >> 2;
+    ListNodePosi(T) q = p;
+    while(m > 0){
+        q = q->succ;
+        m--;
+    }
+    mergeSort(p, m);
+    mergeSort(q, n-m);
+    merge(p, n, *this, q, n-m);
 }
 
