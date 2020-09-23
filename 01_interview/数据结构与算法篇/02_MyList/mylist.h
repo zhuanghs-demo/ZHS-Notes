@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:10:21
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 10:30:17
+ * @LastEditTime: 2020-09-23 20:45:30
  */
 #include "listnode.h"
 
@@ -35,7 +35,7 @@ public:
     //析构函数
     ~myList();
     //只读访问接口
-    Rank size() const { return _size; }
+    int  size() const { return _size; }
     bool empty() const { return _size<=0; }
     T& operator[](Rank r) const;
     ListNodePosi(T) first() const { return header->succ; }

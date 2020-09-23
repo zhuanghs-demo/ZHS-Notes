@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:15:55
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 19:37:15
+ * @LastEditTime: 2020-09-23 20:46:03
  */
 #include "mylist.h"
 #include <stdlib.h>
@@ -237,7 +237,7 @@ ListNodePosi(T) myList<T>::selectMax(ListNodePosi(T) p, int n)
 {
     ListNodePosi(T) max = p;
     for(ListNodePosi(T) cur = p; 1 < n; n--){
-        if(!lt((cur = cur->succ)->data, max->data)){
+        if((cur = cur->succ)->data > max->data){
             max = cur;
         }
     }

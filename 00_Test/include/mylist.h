@@ -5,8 +5,8 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:10:21
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-23 17:12:07
- *  部分GCC编译器不支持模版类的分离编译
+ * @LastEditTime: 2020-09-23 20:57:49
+ *  部分GCC编译器不支持模版类的分离编译,也不支持export关键字，故涉及模板类的声明和实现最好写在同一个文件里
  */
 
 
