@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-22 14:01:22
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 19:20:21
+ * @LastEditTime: 2020-09-23 10:04:18
  */
 #include"mystack.h"
 
