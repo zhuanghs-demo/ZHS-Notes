@@ -5,11 +5,11 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-22 14:01:22
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 17:47:13
+ * @LastEditTime: 2020-09-22 19:20:21
  */
 #include"mystack.h"
 
-typedef  long long   __int64
+typedef  long   __int64;
 
 //递归实现
 void convert_recursion(myStack<char>& S, __int64 n, int base)

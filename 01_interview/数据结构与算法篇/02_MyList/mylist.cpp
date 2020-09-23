@@ -5,9 +5,10 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-21 15:15:55
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-22 11:19:41
+ * @LastEditTime: 2020-09-22 19:37:15
  */
 #include "mylist.h"
+#include <stdlib.h>
 
 template<typename T> 
 void myList<T>::init()
