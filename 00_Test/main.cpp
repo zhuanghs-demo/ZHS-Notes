@@ -4,17 +4,18 @@
  * @Author: Allen Zhuang
  * @Date: 2020-09-22 19:56:05
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-23 15:38:30
+ * @LastEditTime: 2020-09-23 20:15:05
  */
 #include <stdio.h>
+#include "include/print.h"
 #include "include/mylist.h"
 
 int main(int argv, char** argc)
 {
-    printf("test\n");
-    // myList<int> L;
-    // L.insertAsFirst(1);
-    // L.insertAsLast(2);
-    // printf("%d\n", L.size());
+    printMsg();
+    myList<int> L;
+    L.insertAsFirst(1);
+    L.insertAsLast(2);
+    printf("L.size()=%d\n", L.size());
     return 0;
 }

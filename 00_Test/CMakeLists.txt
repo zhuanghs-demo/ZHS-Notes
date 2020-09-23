@@ -16,4 +16,4 @@ add_executable(test main.cpp)
 
 #链接库
 link_directories(${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(test mylist)
+target_link_libraries(test print mylist)
