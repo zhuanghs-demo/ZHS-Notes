@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-09-22 19:56:05
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-24 15:00:14
+ * @LastEditTime: 2020-09-24 19:43:40
  */
 #include <stdio.h>
 #include "include/print.h"
@@ -18,7 +18,7 @@ struct Queen    //皇后类
 {
     int _x;
     int _y;
-    
+   
     Queen(int x, int y):_x(x),_y(y) {}
 
     bool operator==(const Queen& q) const {
@@ -77,7 +77,7 @@ void placeQueen(int N)
 
 int main(int argv, char** argc)
 {
-    printMsg();
+    //printMsg();
     // myList<int> L;
     // L.insertAsFirst(1);
     // L.insertAsLast(2);
