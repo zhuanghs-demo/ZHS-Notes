@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-25 16:37:07
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-25 17:23:13
+ * @LastEditTime: 2020-09-27 01:14:30
  */
 #ifndef BINTREE_H
 #define BINTREE_H
@@ -34,8 +34,8 @@ struct BinNode  //树节点结构体
     
     //操作接口
     int size();//统计当前节点后代总数，即以其为根节点的子树的规模
-    BinNodePosi(T) insertAslc(const T&);//作为左节点插入
-    BinNodePosi(T) insertAsrc(const T&);//作为右节点插入
+    BinNodePosi(T) insertAsLC(const T&);//作为左节点插入
+    BinNodePosi(T) insertAsRC(const T&);//作为右节点插入
     BinNodePosi(T) succ();//取直接后继
     template<typename VST> void travLevel(VST&);//子树层次遍历
     template<typename VST> void travPre(VST&);//子树先序遍历
@@ -45,6 +45,53 @@ struct BinNode  //树节点结构体
     bool operator<(const BinNode& bn) { return this->data <  bn.data; }
     bool operator==(const BinNode& bn) { return this->data == bn.data; } 
 };
+
+
+//BinNode状态和性质的判断
+#define IsRoot(x) (!((x).parent))
+#define IsLChild(x) (!IsRoot(x) && (&(x) == (x).parent->lChild))
+#define IsRChild(x) (!IsRoot(x) && (&(x) == (x).parent->rChild))
+#define HasParent(x) (!IsRoot(x))
+#define HasLChild(x) ((x).lChild)
+#define HasRChild(x) ((x).rChild)
+#define HasChild(x) (HasLChild(x) || HasRChild(x))
+#define HasBothChild(x) (HasLChild(x) && HasRChild(x))
+#define IsLeaf(x) (!HasChild(x))
+
+//与BinNode有特定关系的节点或指针
+#define sibing(p) (IsLChild(*(p)) ? (p)->parent->lChild : (p)->parent->rChild) //兄弟
+#define uncle(p) (IsLChild(*((p)->parent)) ? (p)->parent->parent->lChild : (p)->parent->parent->rChild) //叔叔
+#define FormParentTo(x) (IsRoot(x) ? _root : (IsLChild(x) ? (x).parent->lChild : (x).parent->rChild))//来自父亲的指针
+
+
+template<typename T>
+BinNodePosi(T) BinNode<T>::insertAsLC(const T& e){ return lChild = new BinNode(e, this); }
+
+template<typename T>
+BinNodePosi(T) BinNode<T>::insertAsRC(const T& e){ return rChild = new BinNode(e, this); }
+
+template<typename T> 
+template<typename VST>
+void BinNode<T>::travIn(VST& visit)
+{
+    switch (rand() % 5){
+        case 1:
+            travIn_I1(this, visit);
+            break;
+        case 2:
+            travIn_I2(this, visit);
+            break;
+        case 3:
+            travIn_I3(this, visit);
+            break;
+        case 4:
+            travIn_I4(this, visit);
+            break;
+        default:
+            travIn_R(this, visit);
+            break;
+    }
+}
 
 
 
