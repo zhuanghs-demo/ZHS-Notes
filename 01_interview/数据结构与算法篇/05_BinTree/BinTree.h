@@ -5,12 +5,14 @@
  * @Author: Allen zhuang
  * @Date: 2020-09-25 16:37:07
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-09-27 01:14:30
+ * @LastEditTime: 2020-09-28 23:13:07
  */
 #ifndef BINTREE_H
 #define BINTREE_H
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 
 #define BinNodePosi(T) BinNode<T>*      //节点位置
 #define stature(p)  ((p)? (p)->height: -1)  //树节点高度（空树为-1）
@@ -94,8 +96,55 @@ void BinNode<T>::travIn(VST& visit)
 }
 
 
+template<typename T>
+class BinTree
+{
+protected:
+    int _size;
+    BinNodePosi(T) _root;
+    virtual int updateHeight(BinNodePosi(T) x);
+    void updateHeightAbove(BinNodePosi(T) x);
+public:
+    BinTree():_size(0),_root(NULL) {}
+    ~BinTree() { if(_size > 0) remove(_root); }
+    int size() const { return _size; }
+    bool empty() const { return !_root; }
+    BinNodePosi(T) root() const { return _root; }
+    BinNodePosi(T) insertAsRoot(const T& e);
+    BinNodePosi(T) insertAsLC(BinNodePosi(T) x, const T& e);
+    BinNodePosi(T) insertAsRC(BinNodePosi(T) x, const T& e);
+    BinNodePosi(T) attachAsLC(BinNodePosi(T) x, BinTree<T>* &T);
+    BinNodePosi(T) attachAsRC(BinNodePosi(T) x, BinTree<T>* &T);
+    int remove(BinNodePosi(T) x);
+    BinTree<int>* secede(BinNodePosi(T) x);
+    template<typename VST>
+    void travLevel(VST& visit){ if(_root) _root->travLevel(visit); }
+    template<typename VST>
+    void travPre(VST& visit){ if(_root) _root->travPre(visit); }
+    template<typename VST>
+    void travIn(VST& visit){ if(_root) _root->travIn(visit); }
+    template<typename VST>
+    void travPost(VST& visit){ if(_root) _root->travPost(visit); }
+    bool operator<(const BinTree<T>& t)
+    { return _root && t._root && _root < t._root); }
+    bool operator==(const BinTree<T>& t)
+    { return _root && t._root && (_root == t._root); }
+};
 
+template<typename T>
+int BinTree<T>::updateHeight(BinNodePosi(T) x)
+{
+    return x->height = 1 + stature(x->lChild)>stature(x->rChild) ? stature(x->lChild): stature(x->rChild);
+}
 
+template<typename T>
+void BinTree<T>::updateHeightAbove(BinNodePosi(T) x)
+{
+    while (x){
+        updateHeight(x);
+        x = x->parent;
+    }
+}
 
 
 
