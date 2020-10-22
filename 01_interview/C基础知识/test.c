@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-21 19:12:39
+ * @LastEditTime: 2020-10-22 19:58:51
  */
 
 // #include <assert.h>
@@ -26,6 +26,9 @@
 // }
 
 #include <ctype.h>
+#include <errno.h>
+#include <math.h>
+#include <stdio.h>
 #include <string.h>
 
 void test_ctype() {
@@ -135,9 +138,41 @@ void test_isxdigit() {
   }
 }
 
+extern int errno;
+void test_errno() {
+  FILE *fp;
+  fp = fopen("file.txt", "r");
+  if (fp == NULL) {
+    fprintf(stderr, "Value of errno:%d\n", errno);
+    fprintf(stderr, "Error opening file:%s\n", strerror(errno));
+  } else {
+    fclose(fp);
+  }
+}
+
+void test_EDOM() {
+  double val;
+  errno = 0;
+  val = sqrt(-10);
+  if (errno == EDOM) {
+    printf("InVaild value\n");
+  } else {
+    printf("Vaild value\n");
+  }
+  errno = 0;
+  val = sqrt(10);
+  if (errno == EDOM) {
+    printf("InVaild value\n");
+  } else {
+    printf("Vaild value\n");
+  }
+}
+
 void main(void) {
   // test_ctype();
   // test_isprint();
   // test_ispunct();
-  test_isxdigit();
+  // test_isxdigit();
+  // test_errno();
+  test_EDOM();
 }
