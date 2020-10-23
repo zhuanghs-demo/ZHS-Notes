@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-22 19:58:51
+ * @LastEditTime: 2020-10-23 19:41:59
  */
 
 // #include <assert.h>
@@ -27,6 +27,7 @@
 
 #include <ctype.h>
 #include <errno.h>
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -150,23 +151,42 @@ void test_errno() {
   }
 }
 
-void test_EDOM() {
-  double val;
-  errno = 0;
-  val = sqrt(-10);
-  if (errno == EDOM) {
-    printf("InVaild value\n");
-  } else {
-    printf("Vaild value\n");
-  }
-  errno = 0;
-  val = sqrt(10);
-  if (errno == EDOM) {
-    printf("InVaild value\n");
-  } else {
-    printf("Vaild value\n");
-  }
-}
+// void test_EDOM() {
+//   double val;
+//   errno = 0;
+//   val = sqrt(-10);
+//   if (errno == EDOM) {
+//     printf("InVaild value\n");
+//   } else {
+//     printf("Vaild value\n");
+//   }
+//   errno = 0;
+//   val = sqrt(10);
+//   if (errno == EDOM) {
+//     printf("InVaild value\n");
+//   } else {
+//     printf("Vaild value\n");
+//   }
+// }
+
+// void test_ERANGE() {
+//   double val;
+//   double x;
+//   x = 1.00000;
+//   val = log(x);
+//   if (errno == ERANGE) {
+//     printf("Log(%f) is out of range\n", x);
+//   } else {
+//     printf("Log(%f) = %f\n", x, val);
+//   }
+//   x = 0.00000;
+//   val = log(x);
+//   if (errno == ERANGE) {
+//     printf("Log(%f) is out of range\n", x);
+//   } else {
+//     printf("Log(%f) = %f\n", x, val);
+//   }
+// }
 
 void main(void) {
   // test_ctype();
@@ -174,5 +194,6 @@ void main(void) {
   // test_ispunct();
   // test_isxdigit();
   // test_errno();
-  test_EDOM();
+  // test_EDOM();
+  // test_ERANGE();
 }
