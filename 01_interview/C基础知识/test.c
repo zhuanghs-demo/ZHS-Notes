@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-26 16:49:18
+ * @LastEditTime: 2020-10-27 01:23:31
  */
 
 // #include <assert.h>
@@ -318,19 +318,61 @@ void test_exp() {
 //   return val;
 // }
 
-#include <stddef.h>
+// #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
-struct address {
-  char name[50];
-  char street[50];
-  int phone;
-};
+// struct address {
+//   char name[50];
+//   char street[50];
+//   int phone;
+// };
 
-void test_offsetof() {
-  printf("address结构中的name偏移为%d\n", offsetof(struct address, name));
-  printf("address结构中的street偏移为%d\n", offsetof(struct address, street));
-  printf("address结构中的phone偏移为%d\n", offsetof(struct address, phone));
+// void test_offsetof() {
+//   printf("address结构中的name偏移为%d\n", offsetof(struct address, name));
+//   printf("address结构中的street偏移为%d\n", offsetof(struct address,
+//   street)); printf("address结构中的phone偏移为%d\n", offsetof(struct address,
+//   phone));
+// }
+
+// void test_clearerr() {
+//   FILE* fp;
+//   int c;
+
+//   fp = fopen("test.txt", "w");
+//   c = fgetc(fp);
+//   if (ferror(fp)) {
+//     printf("读取文件test.txt发生错误1\n");
+//   }
+//   clearerr(fp);
+//   if (ferror(fp)) {
+//     printf("读取文件test.txt发生错误2\n");
+//   }
+//   fclose(fp);
+// }
+
+void test_feof() {
+  FILE* fp;
+  int c;
+  char str[] = "This is a test file!";
+
+  fp = fopen("test.txt", "w+");
+  if (fp == NULL) {
+    printf("open test.txt failed!\n");
+    return;
+  }
+  fwrite(str, 1, strlen(str), fp);
+  fclose(fp);
+
+  fp = fopen("test.txt", "r");
+  while (1) {
+    c = fgetc(fp);
+    if (feof(fp)) {
+      break;
+    }
+    fputc(c, stdout);
+  }
+  fclose(fp);
 }
 
 void main(void) {
@@ -348,5 +390,8 @@ void main(void) {
   // test_signal();
   // test_raise();
   // test_va_arg();
-  test_offsetof();
+  // test_offsetof();
+  // test_clearerr();
+  test_feof();
+  return;
 }
