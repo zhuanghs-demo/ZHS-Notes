@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-27 01:23:31
+ * @LastEditTime: 2020-10-27 20:23:25
  */
 
 // #include <assert.h>
@@ -373,6 +373,56 @@ void test_feof() {
     fputc(c, stdout);
   }
   fclose(fp);
+  return;
+}
+
+void test_fflush() {
+  char buff[1024];
+  memset(buff, '\0', sizeof(buff));
+
+  fprintf(stdout, "start IOFBE\n");
+  setvbuf(stdout, buff, _IOFBF, 1024);
+  fprintf(stdout, "This is a test case!\n");
+  fprintf(stdout, "save stdout string to buff\n");
+  fflush(stdout);
+
+  fprintf(stdout, "It will appear after flush buffer\n");
+  fprintf(stdout, "last sleep 5 seconds\n");
+  sleep(5);
+  return;
+}
+
+void test_fgetpos() {
+  FILE* fp;
+  fpos_t pos;
+
+  fp = fopen("file.txt", "w+");
+  if (!ferror(fp)) {
+    fgetpos(fp, &pos);
+    fputs("This is a test file", fp);
+
+    fsetpos(fp, &pos);
+    fputs("Replace previous text", fp);
+  }
+  fclose(fp);
+  return;
+}
+
+void test_fread_fwrite() {
+  FILE* fp;
+  char c[] = "This is a test file";
+  char buff[1024];
+
+  fp = fopen("file.txt", "w+");
+  if (!ferror(fp)) {
+    fwrite(c, strlen(c), 1, fp);
+
+    fseek(fp, SEEK_SET, 0);
+    fread(buff, strlen(c), 1, fp);
+    fprintf(stdout, buff);
+  }
+  fclose(fp);
+  return;
 }
 
 void main(void) {
@@ -392,6 +442,9 @@ void main(void) {
   // test_va_arg();
   // test_offsetof();
   // test_clearerr();
-  test_feof();
+  // test_feof();
+  // test_fflush();
+  // test_fgetpos();
+  test_fread_fwrite();
   return;
 }
