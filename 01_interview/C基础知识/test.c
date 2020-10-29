@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-27 20:23:25
+ * @LastEditTime: 2020-10-29 20:24:34
  */
 
 // #include <assert.h>
@@ -319,6 +319,7 @@ void test_exp() {
 // }
 
 // #include <stddef.h>
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -413,13 +414,113 @@ void test_fread_fwrite() {
   char c[] = "This is a test file";
   char buff[1024];
 
-  fp = fopen("file.txt", "w+");
-  if (!ferror(fp)) {
-    fwrite(c, strlen(c), 1, fp);
+  fp = fopen("file.txt", "r+");
+  if (fp == NULL) return;
+  fwrite(c, strlen(c), 1, fp);
+  fseek(fp, SEEK_SET, 0);
+  fread(buff, strlen(c), 1, fp);
+  fprintf(stdout, buff);
+  fclose(fp);
+  return;
+}
 
-    fseek(fp, SEEK_SET, 0);
-    fread(buff, strlen(c), 1, fp);
-    fprintf(stdout, buff);
+void test_fseek() {
+  FILE* fp;
+  fp = fopen("file1.txt", "w+");
+  fputs("This is a test file!", fp);
+  fseek(fp, 8, SEEK_SET);
+  fputs("C Programming language!", fp);
+  fclose(fp);
+  return;
+}
+
+extern int errno;
+void test_ftell() {
+  FILE* fp;
+  long int len;
+  fp = fopen("file2.txt", "r");
+  if (fp == NULL) {
+    fprintf(stderr, "invalue:%d\n", errno);
+    fprintf(stderr, "error desc:%s\n", strerror(errno));
+  } else {
+    fseek(fp, 0, SEEK_END);
+    len = ftell(fp);
+    fprintf(stdout, "file length is:%ld\n", len);
+    fclose(fp);
+  }
+  return;
+}
+
+void test_printfile(const char* filename) {
+  FILE* fp;
+  int c;
+
+  fp = fopen(filename, "r");
+  if (fp == NULL) return;
+  while (1) {
+    c = fgetc(fp);
+    if (feof(fp)) {
+      break;
+    }
+    printf("%c", c);
+  }
+  printf("\n");
+  return;
+}
+
+void test_remove() {
+  FILE* fp;
+  char filename[] = "file2.txt";
+  int ret;
+
+  fp = fopen(filename, "w");
+  fprintf(fp, "This is also a test file");
+  fclose(fp);
+  test_printfile(filename);
+  ret = remove(filename);
+  if (ret) {
+    fprintf(stdout, "Remove the file failed");
+  } else {
+    fprintf(stdout, "Remove the file success");
+  }
+  return;
+}
+
+void test_rename() {
+  char oldName[] = "file1.txt";
+  char newName[] = "newFile1.txt";
+  int ret;
+
+  ret = rename(oldName, newName);
+  if (ret) {
+    fprintf(stdout, "Rename the file failed");
+  } else {
+    fprintf(stdout, "Rename the file success");
+  }
+  return;
+}
+
+void test_rewind() {
+  FILE* fp;
+  int ch;
+
+  fp = fopen("newFile.txt", "r");
+  if (fp == NULL) return;
+  while (1) {
+    ch = fgetc(fp);
+    if (feof(fp)) {
+      break;
+    }
+    printf("%c", ch);
+  }
+  printf("\n");
+  rewind(fp);
+  while (1) {
+    ch = fgetc(fp);
+    if (feof(fp)) {
+      break;
+    }
+    printf("%c", ch);
   }
   fclose(fp);
   return;
@@ -445,6 +546,11 @@ void main(void) {
   // test_feof();
   // test_fflush();
   // test_fgetpos();
-  test_fread_fwrite();
+  // test_fread_fwrite();
+  // test_fseek();
+  // test_ftell();
+  // test_remove();
+  // test_rename();
+  test_rewind();
   return;
 }
