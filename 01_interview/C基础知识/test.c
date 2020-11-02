@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-30 20:42:42
+ * @LastEditTime: 2020-10-31 17:06:56
  */
 
 // #include <assert.h>
@@ -602,7 +602,24 @@ void test_vfprintf() {
   FILE* fp;
 
   fp = fopen("file.txt", "w+");
-  WriteFrmtd(fp, "There are two arguments %d %s\n", 10, "people");
+  WriteFrmtd(fp, "There are two arguments %d %s\n", 50, "people");
+  fclose(fp);
+  return;
+}
+
+void test_fgets() {
+  FILE* fp;
+  char str[50] = {0};
+
+  fp = fopen("file1.txt", "r");
+  if (!fp) {
+    printf("Open file error by mode ReadOnly\n");
+    perror("Error: ");
+    return;
+  }
+  if (fgets(str, sizeof(str), fp)) {
+    puts(str);
+  }
   fclose(fp);
   return;
 }
@@ -639,6 +656,7 @@ void main(void) {
   // test_tmpnam();
   // test_printf();
   // test_sprintf();
-  test_vfprintf();
+  // test_vfprintf();
+  test_fgets();
   return;
 }
