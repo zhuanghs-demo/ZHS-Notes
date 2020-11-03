@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-10-27 20:23:25
+ * @LastEditTime: 2020-11-04 01:44:12
  */
 
 // #include <assert.h>
@@ -319,8 +319,8 @@ void test_exp() {
 // }
 
 // #include <stddef.h>
-#include <stdio.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <string.h>
 
 // struct address {
 //   char name[50];
@@ -351,77 +351,234 @@ void test_exp() {
 //   fclose(fp);
 // }
 
-void test_feof() {
-  FILE* fp;
-  int c;
-  char str[] = "This is a test file!";
+// void test_feof() {
+//   FILE* fp;
+//   int c;
+//   char str[] = "This is a test file!";
 
-  fp = fopen("test.txt", "w+");
-  if (fp == NULL) {
-    printf("open test.txt failed!\n");
-    return;
-  }
-  fwrite(str, 1, strlen(str), fp);
-  fclose(fp);
+//   fp = fopen("test.txt", "w+");
+//   if (fp == NULL) {
+//     printf("open test.txt failed!\n");
+//     return;
+//   }
+//   fwrite(str, 1, strlen(str), fp);
+//   fclose(fp);
 
-  fp = fopen("test.txt", "r");
-  while (1) {
-    c = fgetc(fp);
-    if (feof(fp)) {
-      break;
+//   fp = fopen("test.txt", "r");
+//   while (1) {
+//     c = fgetc(fp);
+//     if (feof(fp)) {
+//       break;
+//     }
+//     fputc(c, stdout);
+//   }
+//   fclose(fp);
+//   return;
+// }
+
+// void test_fflush() {
+//   char buff[1024];
+//   memset(buff, '\0', sizeof(buff));
+
+//   fprintf(stdout, "start IOFBE\n");
+//   setvbuf(stdout, buff, _IOFBF, 1024);
+//   fprintf(stdout, "This is a test case!\n");
+//   fprintf(stdout, "save stdout string to buff\n");
+//   fflush(stdout);
+
+//   fprintf(stdout, "It will appear after flush buffer\n");
+//   fprintf(stdout, "last sleep 5 seconds\n");
+//   sleep(5);
+//   return;
+// }
+
+// void test_fgetpos() {
+//   FILE* fp;
+//   fpos_t pos;
+
+//   fp = fopen("file.txt", "w+");
+//   if (!ferror(fp)) {
+//     fgetpos(fp, &pos);
+//     fputs("This is a test file", fp);
+
+//     fsetpos(fp, &pos);
+//     fputs("Replace previous text", fp);
+//   }
+//   fclose(fp);
+//   return;
+// }
+
+// void test_fread_fwrite() {
+//   FILE* fp;
+//   char c[] = "This is a test file";
+//   char buff[1024];
+
+//   fp = fopen("file.txt", "w+");
+//   if (!ferror(fp)) {
+//     fwrite(c, strlen(c), 1, fp);
+
+//     fseek(fp, SEEK_SET, 0);
+//     fread(buff, strlen(c), 1, fp);
+//     fprintf(stdout, buff);
+//   }
+//   fclose(fp);
+//   return;
+// }
+
+#include <assert.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
+char* simple_memchr(const char* str, int c, size_t n) {
+  if (!str)
+    return NULL;
+  while (n--) {
+    if (*str++ == (char)c) {
+      return (char*)str - 1;
     }
-    fputc(c, stdout);
   }
-  fclose(fp);
+  return NULL;
+}
+
+void test_memchr() {
+  const char* str = "www.baidu.com";
+  char* str1 = "wsw.alibaba.com";
+  const char ch = '.';
+  char* ret;
+  char* str2;
+
+  // ret = memchr(str, ch, strlen(str));
+  ret = simple_memchr(str, ch, strlen(str));
+  str2 = (char*)str1 - 1;
+  printf("after |%c| is |%s|\n", ch, ret);
+  printf("str1=%p str2=%p\n", str1, str2);
+  printf("%c  %p\n", *str1++, str1);
   return;
 }
 
-void test_fflush() {
-  char buff[1024];
-  memset(buff, '\0', sizeof(buff));
+int simple_memcmp(const char* s1, const char* s2, size_t n) {
+  assert(s1 || s2);
+  int ret = 0;
+  while (n-- && (ret = *(unsigned char*)s1++ - *(unsigned char*)s2++) == 0)
+    ;
+  return ret;
+}
 
-  fprintf(stdout, "start IOFBE\n");
-  setvbuf(stdout, buff, _IOFBF, 1024);
-  fprintf(stdout, "This is a test case!\n");
-  fprintf(stdout, "save stdout string to buff\n");
-  fflush(stdout);
+void test_memcmp() {
+  char str1[12] = "AAcdef";
+  char str2[12] = "ABCDEF";
+  int ret;
+  int i = 0;
 
-  fprintf(stdout, "It will appear after flush buffer\n");
-  fprintf(stdout, "last sleep 5 seconds\n");
-  sleep(5);
+  // ret = memcmp(str1, str2, 6);
+  // printf("i=%d\n", i++);
+  // printf("s1=%p, s2=%p\n", str1, str2);
+  // printf("s1=%p, s2=%p\n", &str1[0], &str2[0]);
+  ret = simple_memcmp(str1, str2, 6);
+  if (ret > 0) {
+    printf("str1>str2\n");
+  } else if (ret < 0) {
+    printf("str1<str2\n");
+  } else {
+    printf("str1=str2\n");
+  }
   return;
 }
 
-void test_fgetpos() {
-  FILE* fp;
-  fpos_t pos;
-
-  fp = fopen("file.txt", "w+");
-  if (!ferror(fp)) {
-    fgetpos(fp, &pos);
-    fputs("This is a test file", fp);
-
-    fsetpos(fp, &pos);
-    fputs("Replace previous text", fp);
+// memmove
+void* simple_memcpy(char* dest, const char* src, size_t n) {
+  assert(dest || src);
+  char* ret = dest;
+  if (src < dest) {
+    dest += n;
+    src += n;
+    while (n--)
+      *--dest = *--src;
+  } else {
+    while (n--)
+      *dest++ = *src++;
   }
-  fclose(fp);
+  return ret;
+}
+
+void test_memcpy() {
+  char src[50] = "www.baidu.com";
+  char dest[50] = {0};
+
+  printf("Before:%s\n", dest);
+  // memcpy(dest, src, strlen(src));
+  simple_memcpy(dest, src, strlen(src));  // 1.281s
+  printf("After:%s\n", dest);
   return;
 }
 
-void test_fread_fwrite() {
-  FILE* fp;
-  char c[] = "This is a test file";
-  char buff[1024];
+void test_memmove() {
+  char src[] = "new string";
+  char dest[] = "old string";
 
-  fp = fopen("file.txt", "w+");
-  if (!ferror(fp)) {
-    fwrite(c, strlen(c), 1, fp);
+  printf("Before:src=%s dest=%s\n", src, dest);
+  memmove(dest, src, strlen(src));  // 0.24s 系统底层做了优化
+  printf("After::src=%s dest=%s\n", src, dest);
+}
 
-    fseek(fp, SEEK_SET, 0);
-    fread(buff, strlen(c), 1, fp);
-    fprintf(stdout, buff);
-  }
-  fclose(fp);
+void test_memset() {
+  char str[50] = {0};
+
+  strcpy(str, "This is string.h library function");
+  puts(str);
+
+  memset(str, '$', 7);
+  puts(str);
+  return;
+}
+
+void* simple_strcat(char* dest, const char* src) {
+  assert(dest || src);
+  char* ret = dest;
+  while (*dest++ != '\0')
+    ;
+  --dest;
+  while ((*dest++ = *src++) != '\0')
+    ;
+  return ret;
+}
+
+void test_strcat() {
+  char src[50] = "This is source";
+  char dest[50] = "This is destination";
+
+  // strcat(dest, src);
+  simple_strcat(dest, src);
+  printf("Final string:|%s|", dest);
+  return;
+}
+
+void test_strncat() {
+  char src[50] = "This is source";
+  char dest[50] = "This is destination";
+
+  strncat(dest, src, 15);
+  printf("Final string:|%s|", dest);
+  return;
+}
+
+void* simple_strchr(const char* str, const char ch) {
+  assert(str);
+
+  while ((*str++ != ch) && (*str != '\0'))
+    ;
+  return (char*)--str;
+}
+
+void test_strchr() {
+  const char str[] = "www.baidu.com";
+  const char ch = '.';
+  char* ret;
+
+  // ret = simple_strchr(str, ch);
+  ret = strchr(str, ch);
+  printf("After|%c|is|%s|\n", ch, ret);
   return;
 }
 
@@ -445,6 +602,14 @@ void main(void) {
   // test_feof();
   // test_fflush();
   // test_fgetpos();
-  test_fread_fwrite();
+  // test_fread_fwrite();
+  // test_memchr();
+  // test_memcmp();
+  // test_memcpy();
+  // test_memmove();
+  // test_memset();
+  // test_strcat();
+  // test_strncat();
+  test_strchr();
   return;
 }
