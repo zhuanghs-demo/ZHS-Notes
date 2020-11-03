@@ -4,7 +4,8 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-04 01:44:12
+ * @LastEditTime: 2020-11-04 01:59:36
+ * @LastEditTime: 2020-10-31 17:06:56
  */
 
 // #include <assert.h>
@@ -319,6 +320,8 @@ void test_exp() {
 // }
 
 // #include <stddef.h>
+// #include <errno.h>
+// #include <stdarg.h>
 // #include <stdio.h>
 // #include <string.h>
 
@@ -420,6 +423,210 @@ void test_exp() {
 //     fseek(fp, SEEK_SET, 0);
 //     fread(buff, strlen(c), 1, fp);
 //     fprintf(stdout, buff);
+//   fp = fopen("file.txt", "r+");
+//   if (fp == NULL) return;
+//   fwrite(c, strlen(c), 1, fp);
+//   fseek(fp, SEEK_SET, 0);
+//   fread(buff, strlen(c), 1, fp);
+//   fprintf(stdout, buff);
+//   fclose(fp);
+//   return;
+// }
+
+// void test_fseek() {
+//   FILE* fp;
+//   fp = fopen("file1.txt", "w+");
+//   fputs("This is a test file!", fp);
+//   fseek(fp, 8, SEEK_SET);
+//   fputs("C Programming language!", fp);
+//   fclose(fp);
+//   return;
+// }
+
+// extern int errno;
+// void test_ftell() {
+//   FILE* fp;
+//   long int len;
+//   fp = fopen("file2.txt", "r");
+//   if (fp == NULL) {
+//     fprintf(stderr, "invalue:%d\n", errno);
+//     fprintf(stderr, "error desc:%s\n", strerror(errno));
+//   } else {
+//     fseek(fp, 0, SEEK_END);
+//     len = ftell(fp);
+//     fprintf(stdout, "file length is:%ld\n", len);
+//     fclose(fp);
+//   }
+//   return;
+// }
+
+// void test_printfile(const char* filename) {
+//   FILE* fp;
+//   int c;
+
+//   fp = fopen(filename, "r");
+//   if (fp == NULL) return;
+//   while (1) {
+//     c = fgetc(fp);
+//     if (feof(fp)) {
+//       break;
+//     }
+//     printf("%c", c);
+//   }
+//   printf("\n");
+//   return;
+// }
+
+// void test_remove() {
+//   FILE* fp;
+//   char filename[] = "file2.txt";
+//   int ret;
+
+//   fp = fopen(filename, "w");
+//   fprintf(fp, "This is also a test file");
+//   fclose(fp);
+//   test_printfile(filename);
+//   ret = remove(filename);
+//   if (ret) {
+//     fprintf(stdout, "Remove the file failed");
+//   } else {
+//     fprintf(stdout, "Remove the file success");
+//   }
+//   return;
+// }
+
+// void test_rename() {
+//   char oldName[] = "file1.txt";
+//   char newName[] = "newFile1.txt";
+//   int ret;
+
+//   ret = rename(oldName, newName);
+//   if (ret) {
+//     fprintf(stdout, "Rename the file failed");
+//   } else {
+//     fprintf(stdout, "Rename the file success");
+//   }
+//   return;
+// }
+
+// void test_rewind() {
+//   FILE* fp;
+//   int ch;
+
+//   fp = fopen("newFile.txt", "r");
+//   if (fp == NULL) return;
+//   while (1) {
+//     ch = fgetc(fp);
+//     if (feof(fp)) {
+//       break;
+//     }
+//     printf("%c", ch);
+//   }
+//   printf("\n");
+//   rewind(fp);
+//   while (1) {
+//     ch = fgetc(fp);
+//     if (feof(fp)) {
+//       break;
+//     }
+//     printf("%c", ch);
+//   }
+//   fclose(fp);
+//   return;
+// }
+// void test_setbuf() {
+//   char buf[BUFSIZ];
+
+//   setbuf(stdout, buf);
+//   puts("Set stdout to buf");
+//   sleep(5);
+//   fflush(stdout);
+//   return;
+// }
+
+// void test_setvbuf() {
+//   char buf[1024];
+//   memset(buf, '\0', sizeof(buf));
+
+//   fprintf(stdout, "Start full buffer\n");
+//   setvbuf(stdout, buf, _IOFBF, sizeof(buf));
+//   fprintf(stdout, "This is a test code\n");
+//   fprintf(stdout, "Hello\n");
+//   fflush(stdout);
+
+//   fprintf(stdout, "It will appear after 5 seconds\n");
+//   sleep(5);
+//   return;
+// }
+
+// void test_tmpfile() {
+//   FILE* fp;
+//   fp = tmpfile();
+//   printf("Create temp file\n");
+//   fclose(fp);
+//   return;
+// }
+
+// void test_tmpnam() {
+//   char* ptr;
+//   char buffer[L_tmpnam];
+
+//   tmpnam(buffer);
+//   fprintf(stdout, "Create temp file name:%s\n", buffer);
+
+//   ptr = tmpnam(NULL);
+//   fprintf(stdout, "Clear tmp buffer:%s", ptr);
+//   return;
+// }
+
+// void test_printf() {
+//   int ch;
+
+//   for (ch = 33; ch < 126; ++ch) {
+//     printf("ASCII number:%d, Char:%c\n", ch, ch);
+//   }
+//   return;
+// }
+
+// void test_sprintf() {
+//   char str[80];
+//   memset(str, '\0', sizeof(str));
+
+//   sprintf(str, "What about this\n");
+//   puts(str);
+//   return;
+//}
+
+// void WriteFrmtd(FILE* stream, char* format, ...) {
+//   va_list args;
+
+//   va_start(args, format);
+//   vfprintf(stream, format, args);
+//   va_end(args);
+//   return;
+// }
+
+// void test_vfprintf() {
+//   FILE* fp;
+
+//   fp = fopen("file.txt", "w+");
+//   WriteFrmtd(fp, "There are two arguments %d %s\n", 50, "people");
+//   fclose(fp);
+//   return;
+// }
+
+// void test_fgets() {
+//   FILE* fp;
+//   char str[50] = {0};
+
+//   fp = fopen("file1.txt", "r");
+//   if (!fp) {
+//     printf("Open file error by mode ReadOnly\n");
+//     perror("Error: ");
+//     return;
+//   }
+//   if (fgets(str, sizeof(str), fp)) {
+//     puts(str);
 //   }
 //   fclose(fp);
 //   return;
@@ -579,7 +786,6 @@ void test_strchr() {
   // ret = simple_strchr(str, ch);
   ret = strchr(str, ch);
   printf("After|%c|is|%s|\n", ch, ret);
-  return;
 }
 
 void main(void) {
@@ -603,6 +809,19 @@ void main(void) {
   // test_fflush();
   // test_fgetpos();
   // test_fread_fwrite();
+  // test_fseek();
+  // test_ftell();
+  // test_remove();
+  // test_rename();
+  // test_rewind();
+  // test_setbuf();
+  // test_setvbuf();
+  // test_tmpfile();
+  // test_tmpnam();
+  // test_printf();
+  // test_sprintf();
+  // test_vfprintf();
+  // test_fgets();
   // test_memchr();
   // test_memcmp();
   // test_memcpy();
@@ -611,5 +830,6 @@ void main(void) {
   // test_strcat();
   // test_strncat();
   test_strchr();
+
   return;
 }
