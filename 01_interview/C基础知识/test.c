@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-04 01:59:36
+ * @LastEditTime: 2020-11-05 17:33:50
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -638,8 +638,7 @@ void test_exp() {
 #include <string.h>
 
 char* simple_memchr(const char* str, int c, size_t n) {
-  if (!str)
-    return NULL;
+  if (!str) return NULL;
   while (n--) {
     if (*str++ == (char)c) {
       return (char*)str - 1;
@@ -700,11 +699,9 @@ void* simple_memcpy(char* dest, const char* src, size_t n) {
   if (src < dest) {
     dest += n;
     src += n;
-    while (n--)
-      *--dest = *--src;
+    while (n--) *--dest = *--src;
   } else {
-    while (n--)
-      *dest++ = *src++;
+    while (n--) *dest++ = *src++;
   }
   return ret;
 }
@@ -788,6 +785,78 @@ void test_strchr() {
   printf("After|%c|is|%s|\n", ch, ret);
 }
 
+size_t simple_strcspn(const char* str, const char* rej) {
+  assert(str || rej);
+  char* s = (char*)str;
+  char c;
+
+  while ((c = *rej++) != '\0') {
+    while (*str++ != '\0') {
+      if (*rej == *str) return str - s;
+    }
+  }
+  return str - s;
+}
+
+void test_strcspn() {
+  char str1[] = "www.baidu.com";
+  char str2[] = "ab12";
+  int len;
+
+  len = simple_strcspn(str1, str2);
+  // len = strcspn(str1, str2);
+  printf("len=%d\n", len);
+  return;
+}
+
+void test_strpbrk() {
+  const char str1[] = "https://www.baidu.com";
+  const char str2[] = "ub";
+  char* ret;
+
+  ret = strpbrk(str1, str2);
+  if (!ret) return;
+  printf("first char appear is:%c\n", *ret);
+  return;
+}
+
+void test_strspn() {
+  int len;
+  const char str1[] = "ABCDEFG012736";
+  const char str2[] = "ABCDF";
+
+  len = strspn(str1, str2);
+  printf("first match string length is:%d\n", len);
+  return;
+}
+
+void* simple_strstr(const char* s1, const char* s2) {
+  assert(s1 || s2);
+  size_t i, j;
+  size_t len1 = strlen(s1);
+  size_t len2 = strlen(s2);
+  if (len1 < len2) return NULL;
+
+  for (i = 0; i <= len1 - len2; ++i) {
+    for (j = 0; j < len2; ++j)
+      if (s1[i + j] != s2[j]) break;
+    if (j == len2) return (char*)s1 + i;
+  }
+  return NULL;
+}
+
+void test_strstr() {
+  const char str1[] = "www.baidu.com";
+  const char str2[] = "baidu";
+  char* ret;
+
+  ret = simple_strstr(str1, str2);
+  // ret = strstr(str1, str2);
+  if (!ret) return;
+  printf("ret=%s\n", ret);
+  return;
+}
+
 void main(void) {
   // test_ctype();
   // test_isprint();
@@ -829,7 +898,10 @@ void main(void) {
   // test_memset();
   // test_strcat();
   // test_strncat();
-  test_strchr();
-
+  // test_strchr();
+  // test_strcspn();
+  // test_strpbrk();
+  // test_strspn();
+  test_strstr();
   return;
 }
