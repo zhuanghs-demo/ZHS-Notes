@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-05 17:33:50
+ * @LastEditTime: 2020-11-07 19:03:13
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -636,6 +636,7 @@ void test_exp() {
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 char* simple_memchr(const char* str, int c, size_t n) {
   if (!str) return NULL;
@@ -823,7 +824,7 @@ void test_strpbrk() {
 void test_strspn() {
   int len;
   const char str1[] = "ABCDEFG012736";
-  const char str2[] = "ABCDF";
+  const char str2[] = "ABCDF2";
 
   len = strspn(str1, str2);
   printf("first match string length is:%d\n", len);
@@ -854,6 +855,149 @@ void test_strstr() {
   // ret = strstr(str1, str2);
   if (!ret) return;
   printf("ret=%s\n", ret);
+  return;
+}
+
+void test_string() {
+  char str[] = "abc\0def\0";
+  printf("str=%s\n", str);
+  return;
+}
+
+char* simple_strtok_r(char* s, const char* delim, char** save_ptr) {
+  char* end;
+  if (s == NULL) {
+    s = *save_ptr;
+  }
+  if (*s == '\0') {
+    *save_ptr = s;
+    return NULL;
+  }
+  s += strspn(s, delim);
+  if (*s == '\0') {
+    *save_ptr = s;
+    return NULL;
+  }
+  end = s + strcspn(s, delim);
+  if (*end == '\0') {
+    *save_ptr = end;
+    return s;
+  }
+  *end = '\0';
+  *save_ptr = end + 1;
+  return s;
+}
+
+char* simple_strtok(char* s, const char* delim) {
+  static char* olds;
+  return simple_strtok_r(s, delim, &olds);
+}
+
+void test_strtok() {
+  char str[] = "www.baidu.com";
+  char delim[] = ".";
+  char* token;
+  token = simple_strtok(str, delim);
+  while (token) {
+    printf("%s\n", token);
+    token = simple_strtok(NULL, delim);
+  }
+  return;
+}
+
+void test_strxfrm() {
+  char dest[20];
+  char src[20];
+  int len;
+
+  strcpy(src, "baidu");
+  len = strxfrm(dest, src, 20);
+  printf("string |%s| length is |%d|", dest, len);
+  return;
+}
+
+void test_asctime() {
+  struct tm t;
+
+  t.tm_sec = 10;
+  t.tm_min = 06;
+  t.tm_hour = 17;
+  t.tm_mday = 7;
+  t.tm_mon = 10;
+  t.tm_year = 120;
+  t.tm_wday = 6;
+
+  puts(asctime(&t));
+  return;
+}
+
+void test_clock() {
+  clock_t start_t, end_t, total_t;
+  int i;
+
+  start_t = clock();
+  printf("Startup, start_t=%ld\n", start_t);
+
+  printf("Begin a resycle, start_t=%ld\n", start_t);
+  for (i = 0; i < 10000000; ++i) {
+  }
+  end_t = clock();
+  printf("End, end_t=%ld\n", end_t);
+
+  total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+  printf("CPU time spend% f\n", total_t);
+  printf("Exit\n");
+  return;
+}
+
+void test_ctime() {
+  time_t curtime;
+  time(&curtime);
+  printf("Current time:%s\n", ctime(&curtime));
+  return;
+}
+
+void test_difftime() {
+  time_t start_t, end_t;
+  double diff_t;
+
+  printf("Startup...\n");
+  time(&start_t);
+
+  printf("Sleep 5 seconds...\n");
+  sleep(5);
+
+  printf("End...\n");
+  time(&end_t);
+
+  diff_t = difftime(end_t, start_t);
+  printf("Run time=%f\n", diff_t);
+  return;
+}
+
+#define BST (+1)
+#define CCT (+8)
+
+void test_gmtime() {
+  time_t rawtime;
+  struct tm* info;
+
+  time(&rawtime);
+  info = gmtime(&rawtime);
+
+  printf("Current world clock:\n");
+  printf("Landon:%2d:%02d\n", (info->tm_hour + BST) % 24, info->tm_min);
+  printf("China:%2d:%02d\n", (info->tm_hour + CCT) % 24, info->tm_min);
+  return;
+}
+
+void test_localtime() {
+  time_t rawtime;
+  struct tm* info;
+
+  time(&rawtime);
+  info = localtime(&rawtime);
+  printf("Local time is %s\n", asctime(info));
   return;
 }
 
@@ -902,6 +1046,15 @@ void main(void) {
   // test_strcspn();
   // test_strpbrk();
   // test_strspn();
-  test_strstr();
+  // test_strstr();
+  // test_string();
+  // test_strtok();
+  // test_strxfrm();
+  // test_asctime();
+  // test_clock();
+  // test_ctime();
+  // test_difftime();
+  // test_gmtime();
+  test_localtime();
   return;
 }
