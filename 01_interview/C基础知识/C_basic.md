@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 03:59:08
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-03 21:58:23
+ * @LastEditTime: 2020-11-08 20:42:52
 -->
 # C standard <assert.h>
 简介
@@ -712,137 +712,105 @@ stddef .h 头文件定义了各种变量类型和宏。这些定义中的大部�
 2 offsetof(type, member-designator)
 这会生成一个类型为 size_t 的整型常量，它是一个结构成员相对于结构开头的字节偏移量。成员是由 member-designator 给定的，结构的名称是在 type 中给定的。 
 
-C 标准库 - <stdio.h>
+
+
+C 标准库 - <stdlib.h>
 简介
-stdio .h 头文件定义了三个变量类型、一些宏和各种函数来执行输入和输出。
+stdlib .h 头文件定义了四个变量类型、一些宏和各种通用工具函数。
 
 库变量
-下面是头文件 stdio.h 中定义的变量类型：
+下面是头文件 stdlib.h 中定义的变量类型：
 
 
 序号    变量 & 描述
 1 size_t 
 这是无符号整数类型，它是 sizeof 关键字的结果。 
-2 FILE 
-这是一个适合存储文件流信息的对象类型。 
-3 fpos_t 
-这是一个适合存储文件中任何位置的对象类型。 
+2 wchar_t 
+这是一个宽字符常量大小的整数类型。 
+3 div_t 
+这是 div 函数返回的结构。 
+4 ldiv_t 
+这是 ldiv 函数返回的结构。 
 
 库宏
-下面是头文件 stdio.h 中定义的宏：
+
+下面是头文件 stdlib.h 中定义的宏：
+
 
 序号    宏 & 描述
 1 NULL
 这个宏是一个空指针常量的值。 
-2 _IOFBF、_IOLBF 和 _IONBF 
-这些宏扩展了带有特定值的整型常量表达式，并适用于 setvbuf 函数的第三个参数。 
-3 BUFSIZ
-这个宏是一个整数，该整数代表了 setbuf 函数使用的缓冲区大小。 
-4 EOFM 
-这个宏是一个表示已经到达文件结束的负整数。 
-5 FOPEN_MAX 
-这个宏是一个整数，该整数代表了系统可以同时打开的文件数量。 
-6 FILENAME_MAX 
-这个宏是一个整数，该整数代表了字符数组可以存储的文件名的最大长度。如果实现没有任何限制，则该值应为推荐的最大值。 
-7 L_tmpnam 
-这个宏是一个整数，该整数代表了字符数组可以存储的由 tmpnam 函数创建的临时文件名的最大长度。 
-8 SEEK_CUR、SEEK_END 和 SEEK_SET 
-这些宏是在These macros are used in the fseek 函数中使用，用于在一个文件中定位不同的位置。 
-9 TMP_MAX  
-这个宏是 tmpnam 函数可生成的独特文件名的最大数量。 
-10 stderr、stdin 和 stdout  
-这些宏是指向 FILE 类型的指针，分别对应于标准错误、标准输入和标准输出流。 
+2 EXIT_FAILURE
+这是 exit 函数失败时要返回的值。 
+3 EXIT_SUCCESS
+这是 exit 函数成功时要返回的值。 
+4 RAND_MAX 
+这个宏是 rand 函数返回的最大值。 
+5 MB_CUR_MAX  
+这个宏表示在多字节字符集中的最大字符数，不能大于 MB_LEN_MAX。 
 
 库函数
-
-下面是头文件 stdio.h 中定义的函数：
-
-为了更好地理解函数，请按照下面的序列学习这些函数，因为第一个函数中创建的文件会在后续的函数中使用到。
+下面是头文件 stdlib.h 中定义的函数：
 
 
 序号    函数 & 描述
-1 int fclose(FILE *stream)
-关闭流 stream。刷新所有的缓冲区。 
-2 void clearerr(FILE *stream)
-清除给定流 stream 的文件结束和错误标识符。 
-3 int feof(FILE *stream)
-测试给定流 stream 的文件结束标识符。 
-4 int ferror(FILE *stream)
-测试给定流 stream 的错误标识符。 
-5 int fflush(FILE *stream)
-刷新流 stream 的输出缓冲区。 
-6 int fgetpos(FILE *stream, fpos_t *pos)
-获取流 stream 的当前文件位置，并把它写入到 pos。 
-7 FILE *fopen(const char *filename, const char *mode)
-使用给定的模式 mode 打开 filename 所指向的文件。 
-8 size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
-从给定流 stream 读取数据到 ptr 所指向的数组中。 
-9 FILE *freopen(const char *filename, const char *mode, FILE *stream)
-把一个新的文件名 filename 与给定的打开的流 stream 关联，同时关闭流中的旧文件。 
-10 int fseek(FILE *stream, long int offset, int whence)
-设置流 stream 的文件位置为给定的偏移 offset，参数 offset 意味着从给定的 whence 位置查找的字节数。 
-11 int fsetpos(FILE *stream, const fpos_t *pos)
-设置给定流 stream 的文件位置为给定的位置。参数 pos 是由函数 fgetpos 给定的位置。 
-12 long int ftell(FILE *stream)
-返回给定流 stream 的当前文件位置。 
-13 size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)
-把 ptr 所指向的数组中的数据写入到给定流 stream 中。 
-14 int remove(const char *filename)
-删除给定的文件名 filename，以便它不再被访问。 
-15 int rename(const char *old_filename, const char *new_filename)
-把 old_filename 所指向的文件名改为 new_filename。 
-16 void rewind(FILE *stream)
-设置文件位置为给定流 stream 的文件的开头。 
-17 void setbuf(FILE *stream, char *buffer)
-定义流 stream 应如何缓冲。 
-18 int setvbuf(FILE *stream, char *buffer, int mode, size_t size)
-另一个定义流 stream 应如何缓冲的函数。 
-19 FILE *tmpfile(void)
-以二进制更新模式(wb+)创建临时文件。 
-20 char *tmpnam(char *str)
-生成并返回一个有效的临时文件名，该文件名之前是不存在的。 
-21 int fprintf(FILE *stream, const char *format, ...)
-发送格式化输出到流 stream 中。 
-22 int printf(const char *format, ...)
-发送格式化输出到标准输出 stdout。 
-23 int sprintf(char *str, const char *format, ...)
-发送格式化输出到字符串。 
-24 int vfprintf(FILE *stream, const char *format, va_list arg)
-使用参数列表发送格式化输出到流 stream 中。 
-25 int vprintf(const char *format, va_list arg)
-使用参数列表发送格式化输出到标准输出 stdout。 
-26 int vsprintf(char *str, const char *format, va_list arg)
-使用参数列表发送格式化输出到字符串。 
-27 int fscanf(FILE *stream, const char *format, ...)
-从流 stream 读取格式化输入。 
-28 int scanf(const char *format, ...)
-从标准输入 stdin 读取格式化输入。 
-29 int sscanf(const char *str, const char *format, ...)
-从字符串读取格式化输入。 
-30 int fgetc(FILE *stream)
-从指定的流 stream 获取下一个字符（一个无符号字符），并把位置标识符往前移动。 
-31 char *fgets(char *str, int n, FILE *stream)
-从指定的流 stream 读取一行，并把它存储在 str 所指向的字符串内。当读取 (n-1) 个字符时，或者读取到换行符时，或者到达文件末尾时，它会停止，具体视情况而定。 
-32 int fputc(int char, FILE *stream)
-把参数 char 指定的字符（一个无符号字符）写入到指定的流 stream 中，并把位置标识符往前移动。 
-33 int fputs(const char *str, FILE *stream)
-把字符串写入到指定的流 stream 中，但不包括空字符。 
-34 int getc(FILE *stream)
-从指定的流 stream 获取下一个字符（一个无符号字符），并把位置标识符往前移动。 
-35 int getchar(void)
-从标准输入 stdin 获取一个字符（一个无符号字符）。 
-36 char *gets(char *str)
-从标准输入 stdin 读取一行，并把它存储在 str 所指向的字符串中。当读取到换行符时，或者到达文件末尾时，它会停止，具体视情况而定。 
-37 int putc(int char, FILE *stream)
-把参数 char 指定的字符（一个无符号字符）写入到指定的流 stream 中，并把位置标识符往前移动。 
-38 int putchar(int char)
-把参数 char 指定的字符（一个无符号字符）写入到标准输出 stdout 中。 
-39 int puts(const char *str)
-把一个字符串写入到标准输出 stdout，直到空字符，但不包括空字符。换行符会被追加到输出中。 
-40 int ungetc(int char, FILE *stream)
-把字符 char（一个无符号字符）推入到指定的流 stream 中，以便它是下一个被读取到的字符。 
-41 void perror(const char *str)
-把一个描述性错误消息输出到标准错误 stderr。首先输出字符串 str，后跟一个冒号，然后是一个空格。 
+1 double atof(const char *str)
+把参数 str 所指向的字符串转换为一个浮点数（类型为 double 型）。 
+2 int atoi(const char *str)
+把参数 str 所指向的字符串转换为一个整数（类型为 int 型）。 
+3 long int atol(const char *str)
+把参数 str 所指向的字符串转换为一个长整数（类型为 long int 型）。 
+4 double strtod(const char *str, char **endptr)
+把参数 str 所指向的字符串转换为一个浮点数（类型为 double 型）。 
+5 long int strtol(const char *str, char **endptr, int base)
+把参数 str 所指向的字符串转换为一个长整数（类型为 long int 型）。 
+6 unsigned long int strtoul(const char *str, char **endptr, int base)
+把参数 str 所指向的字符串转换为一个无符号长整数（类型为 unsigned long int 型）。 
+7 void *calloc(size_t nitems, size_t size)
+分配所需的内存空间，并返回一个指向它的指针。 
+8 void free(void *ptr)
+释放之前调用 calloc、malloc 或 realloc 所分配的内存空间。 
+9 void *malloc(size_t size)
+分配所需的内存空间，并返回一个指向它的指针。 
+10 void *realloc(void *ptr, size_t size)
+尝试重新调整之前调用 malloc 或 calloc 所分配的 ptr 所指向的内存块的大小。 
+11 void abort(void)
+使一个异常程序终止。 
+12 int atexit(void (*func)(void))
+当程序正常终止时，调用指定的函数 func。 
+13 void exit(int status)
+使程序正常终止。 
+14 char *getenv(const char *name)
+搜索 name 所指向的环境字符串，并返回相关的值给字符串。 
+15 int system(const char *string)
+由 string 指定的命令传给要被命令处理器执行的主机环境。 
+16 void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *))
+执行二分查找。 
+17 void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+数组排序。 
+18 int abs(int x)
+返回 x 的绝对值。 
+19 div_t div(int numer, int denom)
+分子除以分母。 
+20 long int labs(long int x)
+返回 x 的绝对值。 
+21 ldiv_t ldiv(long int numer, long int denom)
+分子除以分母。 
+22 int rand(void)
+返回一个范围在 0 到 RAND_MAX 之间的伪随机数。 
+23 void srand(unsigned int seed)
+该函数播种由函数 rand 使用的随机数发生器。 
+24 int mblen(const char *str, size_t n)
+返回参数 str 所指向的多字节字符的长度。 
+25 size_t mbstowcs(schar_t *pwcs, const char *str, size_t n)
+把参数 str 所指向的多字节字符的字符串转换为参数 pwcs 所指向的数组。 
+26 int mbtowc(whcar_t *pwc, const char *str, size_t n)
+检查参数 str 所指向的多字节字符。 
+27 size_t wcstombs(char *str, const wchar_t *pwcs, size_t n)
+把数组 pwcs 中存储的编码转换为多字节字符，并把它们存储在字符串 str 中。 
+28 int wctomb(char *str, wchar_t wchar)
+检查对应于参数 wchar 所给出的多字节字符的编码。 
+ 
 
 C 标准库 - <string.h>
 简介
@@ -912,5 +880,72 @@ string .h 头文件定义了一个变量类型、一个宏和各种操作字符�
 分解字符串 str 为一组字符串，delim 为分隔符。 
 22 size_t strxfrm(char *dest, const char *src, size_t n)
 根据程序当前的区域选项中的 LC_COLLATE 来转换字符串 src 的前 n 个字符，并把它们放置在字符串 dest 中。 
+
+
+C 标准库 - <time.h>
+简介
+time.h 头文件定义了四个变量类型、两个宏和各种操作日期和时间的函数。
+
+库变量
+下面是头文件 time.h 中定义的变量类型：
+
+序号    变量 & 描述
+1 size_t 
+是无符号整数类型，它是 sizeof 关键字的结果。 
+2 clock_t 
+这是一个适合存储处理器时间的类型。 
+3 time_t is 
+这是一个适合存储日历时间类型。 
+4 struct tm 
+这是一个用来保存时间和日期的结构。 
+
+tm 结构的定义如下：
+struct tm {
+   int tm_sec;         /* 秒，范围从 0 到 59		*/
+   int tm_min;         /* 分，范围从 0 到 59		*/
+   int tm_hour;        /* 小时，范围从 0 到 23		*/
+   int tm_mday;        /* 一月中的第几天，范围从 1 到 31	*/
+   int tm_mon;         /* 月，范围从 0 到 11		*/
+   int tm_year;        /* 自 1900 年起的年数		*/
+   int tm_wday;        /* 一周中的第几天，范围从 0 到 6	*/
+   int tm_yday;        /* 一年中的第几天，范围从 0 到 365	*/
+   int tm_isdst;       /* 夏令时				*/
+};
+
+
+库宏
+
+下面是头文件 time.h 中定义的宏：
+
+
+序号    宏 & 描述
+1 NULL
+这个宏是一个空指针常量的值。 
+2 CLOCKS_PER_SEC 
+这个宏表示每秒的处理器时钟个数。 
+
+库函数
+下面是头文件 time.h 中定义的函数：
+
+
+序号    函数 & 描述
+1 char *asctime(const struct tm *timeptr)
+返回一个指向字符串的指针，它代表了结构 timeptr 的日期和时间。 
+2 clock_t clock(void)
+返回程序执行起（一般为程序的开头），处理器时钟所使用的时间。 
+3 char *ctime(const time_t *timer)
+返回一个表示当地时间的字符串，当地时间是基于参数 timer。 
+4 double difftime(time_t time1, time_t time2)
+返回 time1 和 time2 之间相差的秒数 (time1-time2)。 
+5 struct tm *gmtime(const time_t *timer)
+timer 的值被分解为 tm 结构，并用协调世界时（UTC）也被称为格林尼治标准时间（GMT）表示。 
+6 struct tm *localtime(const time_t *timer)
+timer 的值被分解为 tm 结构，并用本地时区表示。 
+7 time_t mktime(struct tm *timeptr)
+把 timeptr 所指向的结构转换为一个依据本地时区的 time_t 值。 
+8 size_t strftime(char *str, size_t maxsize, const char *format, const struct tm *timeptr)
+根据 format 中定义的格式化规则，格式化结构 timeptr 表示的时间，并把它存储在 str 中。 
+9 time_t time(time_t *timer)
+计算当前日历时间，并把它编码成 time_t 格式。 
 
 

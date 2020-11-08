@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-07 19:03:13
+ * @LastEditTime: 2020-11-09 05:39:30
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -635,11 +635,13 @@ void test_exp() {
 #include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 char* simple_memchr(const char* str, int c, size_t n) {
-  if (!str) return NULL;
+  if (!str)
+    return NULL;
   while (n--) {
     if (*str++ == (char)c) {
       return (char*)str - 1;
@@ -700,9 +702,11 @@ void* simple_memcpy(char* dest, const char* src, size_t n) {
   if (src < dest) {
     dest += n;
     src += n;
-    while (n--) *--dest = *--src;
+    while (n--)
+      *--dest = *--src;
   } else {
-    while (n--) *dest++ = *src++;
+    while (n--)
+      *dest++ = *src++;
   }
   return ret;
 }
@@ -793,7 +797,8 @@ size_t simple_strcspn(const char* str, const char* rej) {
 
   while ((c = *rej++) != '\0') {
     while (*str++ != '\0') {
-      if (*rej == *str) return str - s;
+      if (*rej == *str)
+        return str - s;
     }
   }
   return str - s;
@@ -816,7 +821,8 @@ void test_strpbrk() {
   char* ret;
 
   ret = strpbrk(str1, str2);
-  if (!ret) return;
+  if (!ret)
+    return;
   printf("first char appear is:%c\n", *ret);
   return;
 }
@@ -836,12 +842,15 @@ void* simple_strstr(const char* s1, const char* s2) {
   size_t i, j;
   size_t len1 = strlen(s1);
   size_t len2 = strlen(s2);
-  if (len1 < len2) return NULL;
+  if (len1 < len2)
+    return NULL;
 
   for (i = 0; i <= len1 - len2; ++i) {
     for (j = 0; j < len2; ++j)
-      if (s1[i + j] != s2[j]) break;
-    if (j == len2) return (char*)s1 + i;
+      if (s1[i + j] != s2[j])
+        break;
+    if (j == len2)
+      return (char*)s1 + i;
   }
   return NULL;
 }
@@ -853,7 +862,8 @@ void test_strstr() {
 
   ret = simple_strstr(str1, str2);
   // ret = strstr(str1, str2);
-  if (!ret) return;
+  if (!ret)
+    return;
   printf("ret=%s\n", ret);
   return;
 }
@@ -1001,6 +1011,135 @@ void test_localtime() {
   return;
 }
 
+void test_mktime() {
+  int ret;
+  struct tm info;
+  char buffer[80];
+
+  info.tm_year = 120;
+  info.tm_mon = 10;
+  info.tm_mday = 8;
+  info.tm_hour = 20;
+  info.tm_min = 17;
+  info.tm_sec = 30;
+  info.tm_isdst = -1;
+
+  ret = mktime(&info);
+  if (ret == -1) {
+    printf("mktime failed\n");
+  } else {
+    strftime(buffer, sizeof(buffer), "%c", &info);
+    puts(buffer);
+  }
+  return;
+}
+
+void test_strftime() {
+  char buffer[80];
+  time_t rawtime;
+  struct tm* info;
+
+  time(&rawtime);
+  info = localtime(&rawtime);
+
+  strftime(buffer, sizeof(buffer), "%x-%I:%M%p", info);
+  puts(buffer);
+  return;
+}
+
+void test_time() {
+  time_t seconds;
+
+  seconds = time(NULL);
+  printf("hours:%d\n", seconds / 3600);
+  return;
+}
+
+void functionA() {
+  printf("This is a exit function!\n");
+  return;
+}
+
+void test_atexit() {
+  atexit(functionA);
+  printf("strat...\n");
+  printf("end...\n");
+  return;
+}
+
+void test_exit() {
+  printf("start...\n");
+  printf("exit\n");
+  exit(0);
+  printf("end...\n");
+  return;
+}
+
+void test_getenv() {
+  printf("PATH:%s\n", getenv("PATH"));
+  printf("HOME:%s\n", getenv("HOME"));
+  printf("ROOT:%s\n", getenv("ROOT"));
+  return;
+}
+
+void test_system() {
+  char command[50];
+  strcpy(command, "dir");
+  system(command);
+  return;
+}
+
+int compfunc(const void* a, const void* b) {
+  return (*(int*)a - *(int*)b);
+}
+
+void test_bsreach() {
+  int values[] = {2, 4, 28, 34, 45};
+  int* item;
+  int key = 28;
+  item = bsearch(&key, values, 5, sizeof(int), compfunc);
+  if (item) {
+    printf("Found item=%d\n", *item);
+  } else {
+    printf("Item=%d can not be found!\n", *item);
+  }
+  return;
+}
+
+void test_qsort() {
+  int i;
+  int values[] = {29, 34, 1, 7, 16, 3};
+  printf("Before sort:");
+  for (i = 0; i < 6; ++i) {
+    printf("%d\t", values[i]);
+  }
+  qsort(values, 6, sizeof(int), compfunc);
+  printf("\nAfter sort:");
+  for (i = 0; i < 6; ++i) {
+    printf("%d\t", values[i]);
+  }
+  return;
+}
+
+void test_div() {
+  div_t output;
+  output = div(27, 4);
+  printf("(27/4)Quotient=%d\n", output.quot);
+  printf("(27/4)Remainder=%d\n", output.rem);
+  return;
+}
+
+void test_rand_srand() {
+  int i;
+  // wchar_t wc = L"Hi";
+  time_t t;
+  srand((unsigned)time(&t));
+  for (i = 0; i < 10; ++i) {
+    printf("%d\t", rand() % 50);
+  }
+  return;
+}
+
 void main(void) {
   // test_ctype();
   // test_isprint();
@@ -1055,6 +1194,17 @@ void main(void) {
   // test_ctime();
   // test_difftime();
   // test_gmtime();
-  test_localtime();
+  // test_localtime();
+  // test_mktime();
+  // test_strftime();
+  // test_time();
+  // test_atexit();
+  // test_exit();
+  // test_getenv();
+  // test_system();
+  // test_bsreach();
+  // test_qsort();
+  // test_div();
+  test_rand_srand();
   return;
 }
