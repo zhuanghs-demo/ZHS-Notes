@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-09 05:39:30
+ * @LastEditTime: 2020-11-09 16:53:23
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -640,8 +640,7 @@ void test_exp() {
 #include <time.h>
 
 char* simple_memchr(const char* str, int c, size_t n) {
-  if (!str)
-    return NULL;
+  if (!str) return NULL;
   while (n--) {
     if (*str++ == (char)c) {
       return (char*)str - 1;
@@ -702,11 +701,9 @@ void* simple_memcpy(char* dest, const char* src, size_t n) {
   if (src < dest) {
     dest += n;
     src += n;
-    while (n--)
-      *--dest = *--src;
+    while (n--) *--dest = *--src;
   } else {
-    while (n--)
-      *dest++ = *src++;
+    while (n--) *dest++ = *src++;
   }
   return ret;
 }
@@ -797,8 +794,7 @@ size_t simple_strcspn(const char* str, const char* rej) {
 
   while ((c = *rej++) != '\0') {
     while (*str++ != '\0') {
-      if (*rej == *str)
-        return str - s;
+      if (*rej == *str) return str - s;
     }
   }
   return str - s;
@@ -821,8 +817,7 @@ void test_strpbrk() {
   char* ret;
 
   ret = strpbrk(str1, str2);
-  if (!ret)
-    return;
+  if (!ret) return;
   printf("first char appear is:%c\n", *ret);
   return;
 }
@@ -842,15 +837,12 @@ void* simple_strstr(const char* s1, const char* s2) {
   size_t i, j;
   size_t len1 = strlen(s1);
   size_t len2 = strlen(s2);
-  if (len1 < len2)
-    return NULL;
+  if (len1 < len2) return NULL;
 
   for (i = 0; i <= len1 - len2; ++i) {
     for (j = 0; j < len2; ++j)
-      if (s1[i + j] != s2[j])
-        break;
-    if (j == len2)
-      return (char*)s1 + i;
+      if (s1[i + j] != s2[j]) break;
+    if (j == len2) return (char*)s1 + i;
   }
   return NULL;
 }
@@ -862,8 +854,7 @@ void test_strstr() {
 
   ret = simple_strstr(str1, str2);
   // ret = strstr(str1, str2);
-  if (!ret)
-    return;
+  if (!ret) return;
   printf("ret=%s\n", ret);
   return;
 }
@@ -1089,9 +1080,7 @@ void test_system() {
   return;
 }
 
-int compfunc(const void* a, const void* b) {
-  return (*(int*)a - *(int*)b);
-}
+int compfunc(const void* a, const void* b) { return (*(int*)a - *(int*)b); }
 
 void test_bsreach() {
   int values[] = {2, 4, 28, 34, 45};
@@ -1205,6 +1194,11 @@ void main(void) {
   // test_bsreach();
   // test_qsort();
   // test_div();
+  // char values[] = {0, 1, 7, 9, 23};
+  // printf("size of values is:%d %p %p\n", sizeof(values), &values,
+  // &values[0]);
+  // int a[9] = {0};
+  // printf("%d\n", a[8]);
   test_rand_srand();
   return;
 }
