@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-11-19 02:32:42
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-19 03:52:17
+ * @LastEditTime: 2020-11-19 16:40:53
  */
 
 #include "singlelist.h"
@@ -37,15 +37,60 @@ void realseList(PtrToList l) {
     }
     pTmpNode->pNext = NULL;
     free(pTmpNode);
+    pTmpNode = NULL;
   }
   free(l->pHeader);
+  l->pHeader = NULL;
   l->len = 0;
   return;
 }
 
 bool isEmpty(PtrToList l) {
-  if (!l) {
-    return true;
-  }
+  assert(!l);
   return l->pHeader->pNext == NULL;
+}
+
+PtrToList addFirstNode(PtrToList l, ElementType ele) {
+  if (!l) {
+    return l;
+  }
+  PtrToNode node = malloc(sizeof(listNode));
+  if (!node) {
+    return l;
+  }
+  node->value = ele;
+  node->pNext = l->pHeader->pNext;
+  l->pHeader->pNext = node;
+  ++l->len;
+  return l;
+}
+
+PtrToList addLastNode(PtrToList l, ElementType ele) {
+  if (!l) {
+    return l;
+  }
+  PtrToNode node = malloc(sizeof(listNode));
+  if (!node) {
+    return l;
+  }
+  node->value = ele;
+  node->pNext = NULL;
+  if (l->len == 0 && !l->pHeader->pNext) {
+    l->pHeader->pNext = node;
+  } else {
+    PtrToNode preNode = l->pHeader;
+    PtrToNode tailnode = l->pHeader->pNext;
+    while (tailnode) {
+      preNode = tailnode;
+      tailnode = tailnode->pNext;
+    }
+    preNode->pNext = node;
+  }
+  ++l->len;
+  return l;
+}
+
+PtrToList insertNode(PtrToList l, PtrToNode oldNode, ElementType ele,
+                     bool after) {
+  if (!l || !oldNode) return l;
 }
