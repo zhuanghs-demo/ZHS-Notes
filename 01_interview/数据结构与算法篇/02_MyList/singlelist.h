@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-11-19 02:32:28
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-19 21:30:48
+ * @LastEditTime: 2020-11-21 14:56:42
  */
 #ifndef _SINGLELIST_H
 #define _SINGLELIST_H
@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#define ElementType void*
+typedef void* ElementType;
 
 typedef struct singlelistNode {
   ElementType value;
@@ -31,9 +31,7 @@ void realseList(PtrToList l);
 bool isEmpty(PtrToList l);
 PtrToList addFirstNode(PtrToList l, ElementType ele);
 PtrToList addLastNode(PtrToList l, ElementType ele);
-PtrToList insertNode(PtrToList l,
-                     PtrToNode oldNode,
-                     ElementType ele,
+PtrToList insertNode(PtrToList l, PtrToNode oldNode, ElementType ele,
                      bool after);
 void delNode(PtrToList l, PtrToNode oldNode);
 PtrToNode searchNode(PtrToList l, ElementType key);

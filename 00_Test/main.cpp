@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-09-22 19:56:05
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-19 22:03:40
+ * @LastEditTime: 2020-11-21 16:25:02
  */
 // #include <stdio.h>
 // #include <stack>
@@ -88,6 +88,7 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+
 #include "include/singlelist.h"
 
 void printfList(PtrToList list) {
@@ -98,6 +99,13 @@ void printfList(PtrToList list) {
     void* ele = curNode->value;
     printf("->%d", ele);
   }
+  printf("\n");
+  return;
+}
+
+void printfNode(PtrToNode node) {
+  if (!node) return;
+  printf("%d\n", node->value);
   return;
 }
 
@@ -106,7 +114,20 @@ int main(void) {
   addFirstNode(list, (void*)1);
   addFirstNode(list, (void*)2);
   addLastNode(list, (void*)3);
+  addLastNode(list, (void*)5);
+  printf("before length=%d\n", listLength(list));
   printfList(list);
+  PtrToNode tmpNode = searchNode(list, (void*)3);
+  if (tmpNode) delNode(list, tmpNode);
+  printf("after length=%d\n", listLength(list));
+  printfList(list);
+  PtrToNode curNode = searchNodeByIndex(list, 0);
+  printfNode(curNode);
+  curNode = searchNodeByIndex(list, 2);
+  printfNode(curNode);
+  reserveList(list);
+  printfList(list);
+  //  curNode = searchNodeByIndex(list, 7);
   realseList(list);
   return 0;
 }
