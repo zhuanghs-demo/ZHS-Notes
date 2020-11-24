@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-09 16:53:23
+ * @LastEditTime: 2020-11-24 11:08:07
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -1199,6 +1199,16 @@ void main(void) {
   // &values[0]);
   // int a[9] = {0};
   // printf("%d\n", a[8]);
-  test_rand_srand();
+  // test_rand_srand();
+  // int array[] = {1, 2, 3, 4, 5};
+  // int pos = 1;
+  // printf("%d\n%d\n", array[++pos], pos);
+  // char* src = "ABC";
+  // char dest[10];
+  // memmove(dest, src, sizeof(src));
+  // // dest[3] = 'D';
+  // printf("sizeof(src)=%d, dest=%s\n", sizeof(src), dest);
+  int srcArray[5];
+  printf("%d\t%d\n", sizeof(srcArray), 5 * sizeof(int));
   return;
 }
