@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 20:21:13
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-25 14:38:43
+ * @LastEditTime: 2020-11-27 17:51:07
  */
 #include "listQueue.h"
 
@@ -22,18 +22,19 @@ PtrToListQueue listQueue_create() {
 
 void listQueue_destory(PtrToListQueue q) {
   if (!q || listQueue_isEmpty(q)) return NULL;
-  int data = 0;
+  ElementType data = NULL;
   while (!listQueue_isEmpty(q)) listQueue_dequeue(q, &data);
   free(q);
   q = NULL;
   return;
 }
 
-int listQueue_enqueue(PtrToListQueue q, int data) {
+int listQueue_enqueue(PtrToListQueue q, ElementType data) {
   if (!q) return RET_ERROR;
   PtrToListQueueNode node =
       (PtrToListQueueNode)malloc(sizeof(stListQueue_node));
   if (!node) return RET_ERROR;
+  node->data = data;
   if (!q->head) {
     q->head = node;
   } else {
@@ -44,7 +45,7 @@ int listQueue_enqueue(PtrToListQueue q, int data) {
   return RET_SUCC;
 }
 
-int listQueue_dequeue(PtrToListQueue q, int* data) {
+int listQueue_dequeue(PtrToListQueue q, ElementType* data) {
   if (!q || !data || listQueue_isEmpty(q)) return RET_ERROR;
   PtrToListQueueNode tmpNode = q->head;
   *data = tmpNode->data;
