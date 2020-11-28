@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 20:21:13
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-27 17:51:07
+ * @LastEditTime: 2020-11-28 16:27:10
  */
 #include "listQueue.h"
 
@@ -21,7 +21,7 @@ PtrToListQueue listQueue_create() {
 }
 
 void listQueue_destory(PtrToListQueue q) {
-  if (!q || listQueue_isEmpty(q)) return NULL;
+  if (!q) return NULL;
   ElementType data = NULL;
   while (!listQueue_isEmpty(q)) listQueue_dequeue(q, &data);
   free(q);
