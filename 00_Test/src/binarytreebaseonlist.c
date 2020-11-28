@@ -5,20 +5,16 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-27 15:36:34
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-28 14:29:00
+ * @LastEditTime: 2020-11-28 16:00:53
  */
+#include "binarytreebaseonlist.h"
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "listQueue.h"
-
-typedef struct _treeNode {
-  int data;
-  struct _treeNode* lChild;
-  struct _treeNode* rChild;
-} TNode, stTree, *PtrTree;
 
 void binarytree_create(PtrTree* root) {
   int a = 0;
@@ -88,7 +84,6 @@ void binarytree_levelorder(PtrTree root) {
     if (node->lChild) listQueue_enqueue(queue, (ElementType)node->lChild);
     if (node->rChild) listQueue_enqueue(queue, (ElementType)node->rChild);
   }
-  if (node) free(node);
   listQueue_destory(queue);
   return;
 }
@@ -122,31 +117,4 @@ int binarytree_getheight(PtrTree root) {
   lheight = binarytree_getheight(root->lChild);
   rheight = binarytree_getheight(root->rChild);
   return lheight > rheight ? (lheight + 1) : (rheight + 1);
-}
-
-int main() {
-  PtrTree root = NULL;
-  setenv("MALLOC_TRACE", "1.txt", 1);
-  mtrace();
-
-  printf("\r\n创建二叉树:");
-  binarytree_create(&root);
-  printf("\r\n先序遍历二叉树:");
-  binarytree_preorder(root);
-  printf("\r\n中序遍历二叉树:");
-  binarytree_inorder(root);
-  printf("\r\n后序遍历二叉树:");
-  binarytree_postorder(root);
-  printf("\r\n层次遍历二叉树:");
-  binarytree_levelorder(root);
-
-  printf("\r\n打印二叉树叶子节点:");
-  binarytree_printfleaf(root);
-  printf("\r\n打印二叉树叶子节点个数:%d", binarytree_getleafnum(root));
-  printf("\r\n打印二叉树高度:%d", binarytree_gethigh(root));
-
-  binarytree_destory(root);
-
-  muntrace();
-  return 0;
 }

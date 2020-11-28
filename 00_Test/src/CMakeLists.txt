@@ -15,6 +15,12 @@ add_library(print SHARED ${libprint_src})
 set(libsingle_src singlelist.c)
 add_library(singlelist SHARED ${libsingle_src})
 
+set(liblistQueue_src listQueue.c)
+add_library(listQueue SHARED ${liblistQueue_src})
+
+set(libbinarytreebaseonlist_src binarytreebaseonlist.c)
+add_library(binarytreebaseonlist SHARED ${libbinarytreebaseonlist_src})
+
 # add_library(print_static STATIC ${libprint_src})
 # add_library(print_shared SHARED ${libprint_src})
 #  按照一般的习惯，静态库名字跟动态库名字应该是一致的，只是扩展名不同；

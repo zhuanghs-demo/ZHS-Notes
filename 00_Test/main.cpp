@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-09-22 19:56:05
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-21 16:25:02
+ * @LastEditTime: 2020-11-28 14:47:23
  */
 // #include <stdio.h>
 // #include <stack>
@@ -87,50 +87,50 @@
 extern "C" {
 #endif
 
-#include <stdio.h>
+// #include <stdio.h>
 
-#include "include/singlelist.h"
+// #include "include/singlelist.h"
 
-void printfList(PtrToList list) {
-  printf("Header");
-  PtrToNode curNode = list->pHeader;
-  while (curNode->pNext) {
-    curNode = curNode->pNext;
-    void* ele = curNode->value;
-    printf("->%d", ele);
-  }
-  printf("\n");
-  return;
-}
+// void printfList(PtrToList list) {
+//   printf("Header");
+//   PtrToNode curNode = list->pHeader;
+//   while (curNode->pNext) {
+//     curNode = curNode->pNext;
+//     void* ele = curNode->value;
+//     printf("->%d", ele);
+//   }
+//   printf("\n");
+//   return;
+// }
 
-void printfNode(PtrToNode node) {
-  if (!node) return;
-  printf("%d\n", node->value);
-  return;
-}
+// void printfNode(PtrToNode node) {
+//   if (!node) return;
+//   printf("%d\n", node->value);
+//   return;
+// }
 
-int main(void) {
-  PtrToList list = createList();
-  addFirstNode(list, (void*)1);
-  addFirstNode(list, (void*)2);
-  addLastNode(list, (void*)3);
-  addLastNode(list, (void*)5);
-  printf("before length=%d\n", listLength(list));
-  printfList(list);
-  PtrToNode tmpNode = searchNode(list, (void*)3);
-  if (tmpNode) delNode(list, tmpNode);
-  printf("after length=%d\n", listLength(list));
-  printfList(list);
-  PtrToNode curNode = searchNodeByIndex(list, 0);
-  printfNode(curNode);
-  curNode = searchNodeByIndex(list, 2);
-  printfNode(curNode);
-  reserveList(list);
-  printfList(list);
-  //  curNode = searchNodeByIndex(list, 7);
-  realseList(list);
-  return 0;
-}
+// int main(void) {
+//   PtrToList list = createList();
+//   addFirstNode(list, (void*)1);
+//   addFirstNode(list, (void*)2);
+//   addLastNode(list, (void*)3);
+//   addLastNode(list, (void*)5);
+//   printf("before length=%d\n", listLength(list));
+//   printfList(list);
+//   PtrToNode tmpNode = searchNode(list, (void*)3);
+//   if (tmpNode) delNode(list, tmpNode);
+//   printf("after length=%d\n", listLength(list));
+//   printfList(list);
+//   PtrToNode curNode = searchNodeByIndex(list, 0);
+//   printfNode(curNode);
+//   curNode = searchNodeByIndex(list, 2);
+//   printfNode(curNode);
+//   reserveList(list);
+//   printfList(list);
+//   //  curNode = searchNodeByIndex(list, 7);
+//   realseList(list);
+//   return 0;
+// }
 
 #ifdef __cplusplus
 }

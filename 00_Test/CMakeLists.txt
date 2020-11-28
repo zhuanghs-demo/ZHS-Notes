@@ -15,8 +15,8 @@ add_subdirectory(src)
 
 #编译生成可执行文件
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build)
-add_executable(test main.cpp)
+add_executable(test main.c)
 
 #链接库
 link_directories(${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(test print mylist singlelist)
+target_link_libraries(test print mylist singlelist listQueue binarytreebaseonlist)
