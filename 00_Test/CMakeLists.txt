@@ -19,4 +19,4 @@ add_executable(test main.c)
 
 #链接库
 link_directories(${PROJECT_SOURCE_DIR}/lib)
-target_link_libraries(test print mylist singlelist listQueue binarytreebaseonlist)
+target_link_libraries(test print mylist singlelist listQueue binarytreebaseonlist binarysearchtree)

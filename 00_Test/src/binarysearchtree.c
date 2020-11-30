@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-28 16:32:25
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-30 16:56:40
+ * @LastEditTime: 2020-11-30 18:44:18
  */
 #include "binarysearchtree.h"
 
@@ -52,7 +52,7 @@ int bstree_insert(PtrTree tree, DataType data) {
   node->lChild = NULL;
   node->rChild = NULL;
   if (bstree_is_empty(tree)) {
-    node = tree->root;
+    tree->root = node;
     ++tree->size;
     return RET_SUCC;
   }
@@ -89,7 +89,7 @@ int bstree_delete(PtrTree tree, DataType data) {
   /*1、如果要删除node有2个子节点，需要找到右子树的最小节点minnode，
    * 更新minnode和node节点数据，这样minnode节点就是要删除的节点
    * 再更新node和pnode节点指向要删除的节点*/
-  while (!node && (res = tree->compare(data, node->data) != 0)) {
+  while (node && ((res = tree->compare(data, node->data)) != 0)) {
     pnode = node;
     if (res > 0)
       node = node->rChild;
@@ -114,9 +114,9 @@ int bstree_delete(PtrTree tree, DataType data) {
     pnode = pminnode;
   }
   /*2、当前要删除的节点只有左孩子或者右孩子时，直接父节点指向删除的节点的子节点*/
-  if (!node->lChild) {
+  if (node->lChild != NULL) {
     minnode = node->lChild;
-  } else if (!node->rChild) {
+  } else if (node->rChild != NULL) {
     minnode = node->rChild;
   } else {
     minnode = NULL;
@@ -152,7 +152,7 @@ void bstree_destory(PtrTree tree) {
 void bstree_inorder_node(PtrTreeNode root) {
   if (!root) return;
   bstree_inorder_node(root->lChild);
-  printf(" %d ", *((UseType)root->data));
+  printf(" %d ", root->data);
   bstree_inorder_node(root->rChild);
   return;
 }
@@ -170,7 +170,6 @@ int bstree_compare(DataType key1, DataType key2) {
 void bstree_dump(PtrTree tree) {
   if (!tree || bstree_is_empty(tree)) {
     printf("\r\n 当前树是空树");
-    return;
   }
   printf("\r\nSTART-----------------%d------------\r\n", tree->size);
   bstree_inorder_node(tree->root);
