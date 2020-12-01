@@ -5,14 +5,14 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-28 14:47:47
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-30 17:11:31
+ * @LastEditTime: 2020-12-02 01:08:36
  */
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <assert.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
 
-#include "binarysearchtree.h"
+// #include "binarysearchtree.h"
 
 // int main() {
 //   PtrTree root = NULL;
@@ -41,47 +41,56 @@
 //   return 0;
 // }
 
+// int main() {
+//   bstree* tree = NULL;
+//   bstree_node* node = NULL;
+//   int data = 0;
+//   int res = 0;
+
+//   setenv("MALLOC_TRACE", "1.txt", 1);
+//   mtrace();
+
+//   tree = bstree_create(bstree_compare, NULL);
+//   assert(tree != NULL);
+
+//   while (1) {
+//     printf("\r\n插入一个数字，输入100时退出：");
+//     scanf("%d", &data);
+//     if (data == 100)
+//       break;
+//     res = bstree_insert(tree, data);
+//     printf("\r\n %d 插入%s成功", data, (res != 0) ? ("不") : (" "));
+//   }
+//   bstree_dump(tree);
+
+//   while (1) {
+//     printf("\r\n查询一个数字，输入100时退出：");
+//     scanf("%d", &data);
+//     if (data == 100)
+//       break;
+//     node = bstree_search(tree, data);
+//     printf("\r\n %d %s存在树中", data, (node == NULL) ? ("不") : (" "));
+//   }
+//   bstree_dump(tree);
+//   while (1) {
+//     printf("\r\n删除一个数字，输入100时退出：");
+//     scanf("%d", &data);
+//     if (data == 100)
+//       break;
+//     res = bstree_delete(tree, data);
+//     printf("\r\n %d 删除%s成功", data, (res != 0) ? ("不") : (" "));
+//     bstree_dump(tree);
+//   }
+
+//   bstree_destory(tree);
+
+//   muntrace();
+
+//   return 0;
+// }
+
+#include "listhash.h"
+
 int main() {
-  bstree *tree = NULL;
-  bstree_node *node = NULL;
-  int data = 0;
-  int res = 0;
-
-  setenv("MALLOC_TRACE", "1.txt", 1);
-  mtrace();
-
-  tree = bstree_create(bstree_compare, NULL);
-  assert(tree != NULL);
-
-  while (1) {
-    printf("\r\n插入一个数字，输入100时退出：");
-    scanf("%d", &data);
-    if (data == 100) break;
-    res = bstree_insert(tree, data);
-    printf("\r\n %d 插入%s成功", data, (res != 0) ? ("不") : (" "));
-  }
-  bstree_dump(tree);
-
-  while (1) {
-    printf("\r\n查询一个数字，输入100时退出：");
-    scanf("%d", &data);
-    if (data == 100) break;
-    node = bstree_search(tree, data);
-    printf("\r\n %d %s存在树中", data, (node == NULL) ? ("不") : (" "));
-  }
-  bstree_dump(tree);
-  while (1) {
-    printf("\r\n删除一个数字，输入100时退出：");
-    scanf("%d", &data);
-    if (data == 100) break;
-    res = bstree_delete(tree, data);
-    printf("\r\n %d 删除%s成功", data, (res != 0) ? ("不") : (" "));
-    bstree_dump(tree);
-  }
-
-  bstree_destory(tree);
-
-  muntrace();
-
-  return 0;
+  return test_listhash_main();
 }

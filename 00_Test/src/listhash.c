@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-28 16:34:35
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-12-02 01:05:32
+ * @LastEditTime: 2020-12-02 01:41:15
  */
 #include "listhash.h"
 #include <assert.h>
@@ -144,7 +144,7 @@ void hstable_dump(ptr_hstable h) {
   if (!h)
     return;
 
-  printf("\r\n----开始--size[%d],nel[%d]------------", h->size, h->nel);
+  printf("\r\n----start--size[%d],nel[%d]------------", h->size, h->nel);
   for (i = 0; i < h->size; i++) {
     printf("\r\n hstables[%d]:", i);
     cur = h->hstables[i];
@@ -153,7 +153,7 @@ void hstable_dump(ptr_hstable h) {
       cur = cur->next;
     }
   }
-  printf("\r\n----结束--size[%d],nel[%d]------------", h->size, h->nel);
+  printf("\r\n----end--size[%d],nel[%d]------------", h->size, h->nel);
   return;
 }
 
@@ -200,7 +200,7 @@ int test_listhash_main() {
   while (1) {
     p = (struct test_node*)malloc(sizeof(struct test_node));
     assert(p != NULL);
-    printf("\r\n 请输入key 和value，当可以等于\"quit\"时退出");
+    printf("\r\n please input key and value,when \"quit\" exit");
     scanf("%s", p->key);
     scanf("%s", p->value);
 
@@ -223,7 +223,7 @@ int test_listhash_main() {
   while (1) {
     p = (struct test_node*)malloc(sizeof(struct test_node));
     assert(p != NULL);
-    printf("\r\n 请输入key 查询value的数值，当可以等于\"quit\"时退出");
+    printf("\r\n please input key to search value,when \"quit\" exit");
     scanf("%s", p->key);
 
     if (strcmp(p->key, "quit") == 0) {
@@ -243,7 +243,7 @@ int test_listhash_main() {
   while (1) {
     p = (struct test_node*)malloc(sizeof(struct test_node));
     assert(p != NULL);
-    printf("\r\n 请输入key 删除节点的数值，当可以等于\"quit\"时退出");
+    printf("\r\n please input key to delete the node,when \"quit\" exit");
     scanf("%s", p->key);
 
     if (strcmp(p->key, "quit") == 0) {

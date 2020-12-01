@@ -18,11 +18,14 @@ add_library(singlelist SHARED ${libsingle_src})
 set(liblistQueue_src listQueue.c)
 add_library(listQueue SHARED ${liblistQueue_src})
 
-set(libbinarytreebaseonlist_src binarytreebaseonlist.c)
+set(libbinarytreebaseonlist_src binarytreebaseonlist.c listQueue.c)
 add_library(binarytreebaseonlist SHARED ${libbinarytreebaseonlist_src})
 
 set(libbinarysearchtree_src binarysearchtree.c)
 add_library(binarysearchtree SHARED ${libbinarysearchtree_src})
+
+set(liblisthash_src listhash.c)
+add_library(listhash SHARED ${liblisthash_src})
 
 # add_library(print_static STATIC ${libprint_src})
 # add_library(print_shared SHARED ${libprint_src})
