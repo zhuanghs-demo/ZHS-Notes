@@ -5,53 +5,79 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 15:32:50
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-24 15:52:42
+ * @LastEditTime: 2020-12-06 02:28:25
  */
 
-#include <iostream>
-#include <stack>
-#include <string>
+// #include <iostream>
+// #include <stack>
+// #include <string>
 
-bool isValid(std::string s) {
-  std::stack<char> stk;
-  int len = s.length();
-  for (int i = 0; i < len; ++i) {
-    switch (s[i]) {
-      case '(':
-      case '[':
-      case '{':
-        stk.push(s[i]);
-        break;
-      case ')': {
-        if (!stk.empty() && stk.top() == '(')
-          stk.pop();
-        else
-          stk.push(s[i]);
-        break;
-      }
-      case ']': {
-        if (!stk.empty() && stk.top() == '[')
-          stk.pop();
-        else
-          stk.push(s[i]);
-        break;
-      }
-      case '}': {
-        if (!stk.empty() && stk.top() == '{')
-          stk.pop();
-        else
-          stk.push(s[i]);
-        break;
-      }
-      default:
-        break;
-    }
+// bool isValid(std::string s) {
+//   std::stack<char> stk;
+//   int len = s.length();
+//   for (int i = 0; i < len; ++i) {
+//     switch (s[i]) {
+//       case '(':
+//       case '[':
+//       case '{':
+//         stk.push(s[i]);
+//         break;
+//       case ')': {
+//         if (!stk.empty() && stk.top() == '(')
+//           stk.pop();
+//         else
+//           stk.push(s[i]);
+//         break;
+//       }
+//       case ']': {
+//         if (!stk.empty() && stk.top() == '[')
+//           stk.pop();
+//         else
+//           stk.push(s[i]);
+//         break;
+//       }
+//       case '}': {
+//         if (!stk.empty() && stk.top() == '{')
+//           stk.pop();
+//         else
+//           stk.push(s[i]);
+//         break;
+//       }
+//       default:
+//         break;
+//     }
+//   }
+//   return stk.empty();
+// }
+
+// int main() {
+//   std::string s = "]";
+//   std::cout << isValid(s) << std::endl;
+//   return 0;
+// }
+
+#include <iostream>
+
+class A {
+ public:
+  void function1() { std::cout << "hello!" << std::endl; }
+};
+
+class B {
+ public:
+  void function1() { std::cout << "This is function1" << std::endl; }
+  void function2() {
+    std::cout << "This is function2" << std::endl;
+    this->function1();
   }
-  return stk.empty();
-}
+};
 
 int main() {
-  std::string s = "]";
-  std::cout << isValid(s) << std::endl;
+  // A* pA = NULL;
+  // pA->function1();
+
+  B* pB = NULL;
+  pB->function1();
+  pB->function2();
   return 0;
 }
