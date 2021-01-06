@@ -72,12 +72,36 @@ class B {
   }
 };
 
+class C : virtual public B
+{
+  public:
+  void function1() { std::cout << "This is function1 in C" << std::endl; }
+};
+
+class D : virtual public B
+{
+  public:
+    // void function1() { std::cout << "This is function1 in D" << std::endl; }
+};
+
+class E : public C, public D
+{
+  public:
+    // void function3();
+};
+
 int main() {
   // A* pA = NULL;
   // pA->function1();
 
-  B* pB = NULL;
-  pB->function1();
-  pB->function2();
+  // B* pB = NULL;
+  // pB->function1();
+  // pB->function2();
+
+  C* pC = NULL;
+  pC->function1();
+
+  // E *pE = NULL;
+  // pE->function1();
   return 0;
 }
