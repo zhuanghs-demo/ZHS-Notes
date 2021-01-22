@@ -1,12 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Company: SUNRI
- * @Author: Allen zhuang
- * @Date: 2021-01-12 23:08:05
- * @LastEditors: Allen Zhuang
- * @LastEditTime: 2021-01-13 23:50:21
- */
 #include <arpa/inet.h>
 #include <assert.h>
 #include <endian.h>
@@ -19,7 +10,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-void test_socket_accept(int argc, char* argv[]) {
+#define BUF_SIZE 1024
+
+void test_socket_recv(int argc, char* argv[]) {
   if (argc < 2) {
     printf("usage : %s ip_address port_number\n", basename(argv[0]));
     return;
@@ -52,11 +45,24 @@ void test_socket_accept(int argc, char* argv[]) {
   if (connfd < 0) {
     printf("error : %s\n", strerror(errno));
   } else {
-    printf("==================\n");
-    char remote[INET_ADDRSTRLEN];
-    printf("connectted with ip: %s and port: %d\n",
-           inet_ntop(AF_INET, &client.sin_addr, remote, INET_ADDRSTRLEN),
-           ntohs(client.sin_port));
+    // printf("==================\n");
+    // char remote[INET_ADDRSTRLEN];
+    // printf("connectted with ip: %s and port: %d\n",
+    //        inet_ntop(AF_INET, &client.sin_addr, remote, INET_ADDRSTRLEN),
+    //        ntohs(client.sin_port));
+    char buffer[BUF_SIZE];
+    memset(buffer, '\0', BUF_SIZE-1);
+    ret = recv(connfd, buffer, BUF_SIZE-1, 0);
+    printf("got %d bytes of nomal data '%s' \n", ret, buffer);
+
+    memset(buffer, '\0', BUF_SIZE-1);
+    ret = recv(connfd, buffer, BUF_SIZE-1, MSG_OOB);
+    printf("got %d bytes of nomal data '%s' \n", ret, buffer);
+
+    memset(buffer, '\0', BUF_SIZE-1);
+    ret = recv(connfd, buffer, BUF_SIZE-1, 0);
+    printf("got %d bytes of nomal data '%s' \n", ret, buffer);
+
     close(connfd);
   }
   close(sockfd);
@@ -64,6 +70,6 @@ void test_socket_accept(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-  test_socket_accept(argc, argv);
+  test_socket_recv(argc, argv);
   return 0;
 }

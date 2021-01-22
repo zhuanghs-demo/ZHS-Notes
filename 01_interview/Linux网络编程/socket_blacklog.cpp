@@ -16,6 +16,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <iostream>
 
 static bool stop = false;
 
@@ -27,9 +28,9 @@ int main(int argc, char* argv[]) {
     printf("usage: %s ip_address port_number backlog\n", basename(argv[0]));
     return 1;
   }
-  const char* ip = argv[0];
-  int port = atoi(argv[1]);
-  int backlog = atoi(argv[2]);
+  const char* ip = argv[1];
+  int port = atoi(argv[2]);
+  int backlog = atoi(argv[3]);
 
   // create socket
   int sockfd = socket(PF_INET, SOCK_STREAM, 0);
