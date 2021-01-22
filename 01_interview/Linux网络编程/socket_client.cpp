@@ -33,10 +33,10 @@ void test_socket_send(int argc, char* argv[]) {
       printf("connet failed!\n");
   }else{
       char *nomal_data = "123";
-      char *oob_data = "abd";
-      send(sockfd, nomal_data, sizeof(nomal_data), 0);
-      send(sockfd, nomal_data, sizeof(oob_data), MSG_OOB);
-      send(sockfd, nomal_data, sizeof(nomal_data), 0);
+      char *oob_data = "abc";
+      send(sockfd, nomal_data, strlen(nomal_data), 0);
+      send(sockfd, oob_data, strlen(oob_data), MSG_OOB);
+      send(sockfd, nomal_data, strlen(nomal_data), 0);
   }
 
   close(sockfd);
