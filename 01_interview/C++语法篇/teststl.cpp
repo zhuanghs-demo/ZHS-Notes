@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 15:32:50
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2021-01-11 17:05:31
+ * @LastEditTime: 2021-02-02 18:58:03
  */
 
 // #include <iostream>
@@ -89,6 +89,11 @@ class E : public C, public D {
   // void function3();
 };
 
+class X {};
+
+class Y : public virtual X {};
+class Z : public virtual X {};
+class P : public Y, public Z {};
 void test_demo() {
   double dValue = -40.0;
   unsigned int pbyValue = dValue;
@@ -118,6 +123,12 @@ int main() {
 
   // E *pE = NULL;
   // pE->function1();
+
+  std::cout << "X:" << sizeof(X) << '\n'
+            << "Y:" << sizeof(Y) << '\n'
+            << "Z:" << sizeof(Z) << '\n'
+            << "P:" << sizeof(P) << '\n';
+
   test_demo();
   return 0;
 }
