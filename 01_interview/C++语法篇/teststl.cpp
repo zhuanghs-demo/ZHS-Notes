@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 15:32:50
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2021-01-15 01:00:14
+ * @LastEditTime: 2021-02-02 18:58:03
  */
 
 // #include <iostream>
@@ -56,6 +56,8 @@
 //   return 0;
 // }
 
+#include <stdio.h>
+
 #include <iostream>
 
 class A {
@@ -92,6 +94,21 @@ class X {};
 class Y : public virtual X {};
 class Z : public virtual X {};
 class P : public Y, public Z {};
+void test_demo() {
+  double dValue = -40.0;
+  unsigned int pbyValue = dValue;
+  printf("dwValue:%f, nValue:%u, sizeof(int):%d\n", dValue, pbyValue,
+         sizeof(unsigned int));
+
+  unsigned int pbyValue2 = 4294967281;
+  float fValue2 = dValue;
+  printf("dwValue:%f, nValue:%f, sizeof(float):%d, sizeof(double):%d\n", dValue,
+         fValue2, sizeof(float), sizeof(double));
+
+  double dValue3 = -40.0;
+  unsigned long pbyValue3 = dValue3;
+  printf("dwValue:%f, nValue:%f\n", dValue3, pbyValue3);
+}
 
 int main() {
   // A* pA = NULL;
@@ -112,5 +129,6 @@ int main() {
             << "Z:" << sizeof(Z) << '\n'
             << "P:" << sizeof(P) << '\n';
 
+  test_demo();
   return 0;
 }
