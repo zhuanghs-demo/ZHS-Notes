@@ -52,7 +52,9 @@ void set_recv_buffer(int argc, char* argv[]) {
     char buffer[BUF_SIZE];
     memset(buffer, '\0', BUF_SIZE);
     ret = recv(connfd, buffer, BUF_SIZE-1, 0);
-    while(ret > 0){}
+    while(ret > 0){
+      printf("recevice data: %s, data len: %d\n", buffer, sizeof(buffer));
+    }
     close(connfd);
   }
   close(sockfd);
