@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-24 15:32:50
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-12-06 02:28:25
+ * @LastEditTime: 2021-01-15 01:00:14
  */
 
 // #include <iostream>
@@ -72,23 +72,26 @@ class B {
   }
 };
 
-class C : virtual public B
-{
-  public:
+class C : virtual public B {
+ public:
   void function1() { std::cout << "This is function1 in C" << std::endl; }
 };
 
-class D : virtual public B
-{
-  public:
-    // void function1() { std::cout << "This is function1 in D" << std::endl; }
+class D : virtual public B {
+ public:
+  // void function1() { std::cout << "This is function1 in D" << std::endl; }
 };
 
-class E : public C, public D
-{
-  public:
-    // void function3();
+class E : public C, public D {
+ public:
+  // void function3();
 };
+
+class X {};
+
+class Y : public virtual X {};
+class Z : public virtual X {};
+class P : public Y, public Z {};
 
 int main() {
   // A* pA = NULL;
@@ -98,10 +101,16 @@ int main() {
   // pB->function1();
   // pB->function2();
 
-  C* pC = NULL;
-  pC->function1();
+  // C* pC = NULL;
+  // pC->function1();
 
   // E *pE = NULL;
   // pE->function1();
+
+  std::cout << "X:" << sizeof(X) << '\n'
+            << "Y:" << sizeof(Y) << '\n'
+            << "Z:" << sizeof(Z) << '\n'
+            << "P:" << sizeof(P) << '\n';
+
   return 0;
 }
