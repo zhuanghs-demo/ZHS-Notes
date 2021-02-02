@@ -57,7 +57,7 @@ void test_socket_recv(int argc, char* argv[]) {
 
     memset(buffer, '\0', BUF_SIZE-1);
     ret = recv(connfd, buffer, BUF_SIZE-1, MSG_OOB);
-    printf("got %d bytes of nomal data '%s' \n", ret, buffer);
+    printf("got %d bytes of oob data '%s' \n", ret, buffer);
 
     memset(buffer, '\0', BUF_SIZE-1);
     ret = recv(connfd, buffer, BUF_SIZE-1, 0);
