@@ -5,13 +5,14 @@
  * @Author: Allen zhuang
  * @Date: 2020-12-17 09:59:24
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2021-01-09 16:14:25
+ * @LastEditTime: 2021-02-04 15:13:11
  */
 #include <arpa/inet.h>
 #include <bits/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void byteorder() {
   union {
@@ -49,9 +50,24 @@ void test_inet_pton() {
   return;
 }
 
+void test_strpbrk_strspn(char* temp) {
+  char* url = strpbrk(temp, " \t");
+  if (!url) return;
+  printf("url:%s\n", url);
+  *url++ = '\0';
+  printf("url2:%s\n", url);
+  char* method = temp;
+  printf("method:%s\n", method);
+  url += strspn(url, " \t");
+  printf("url3:%s\n", url);
+  return;
+}
+
 void main() {
-  byteorder();
-  test_inet_ntoa();
-  test_inet_pton();
+  // byteorder();
+  // test_inet_ntoa();
+  // test_inet_pton();
+  char buf[] = "GET /charpter17/user.html HTTP/1.1";
+  test_strpbrk_strspn(buf);
   return;
 }

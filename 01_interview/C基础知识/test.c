@@ -4,7 +4,7 @@
  * @Author: Allen Zhuang
  * @Date: 2020-10-16 04:11:29
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2020-11-24 11:08:07
+ * @LastEditTime: 2021-02-04 14:38:51
  * @LastEditTime: 2020-10-31 17:06:56
  */
 
@@ -818,7 +818,7 @@ void test_strpbrk() {
 
   ret = strpbrk(str1, str2);
   if (!ret) return;
-  printf("first char appear is:%c\n", *ret);
+  printf("first char appear is:%s\n", ret);
   return;
 }
 
@@ -1208,7 +1208,8 @@ void main(void) {
   // memmove(dest, src, sizeof(src));
   // // dest[3] = 'D';
   // printf("sizeof(src)=%d, dest=%s\n", sizeof(src), dest);
-  int srcArray[5];
-  printf("%d\t%d\n", sizeof(srcArray), 5 * sizeof(int));
+  // int srcArray[5];
+  // printf("%d\t%d\n", sizeof(srcArray), 5 * sizeof(int));
+  test_strpbrk();
   return;
 }
