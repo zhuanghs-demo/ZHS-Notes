@@ -1,9 +1,7 @@
 #include <arpa/inet.h>
 #include <assert.h>
-#include <endian.h>
 #include <errno.h>
 #include <netinet/in.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -51,16 +49,16 @@ void test_socket_recv(int argc, char* argv[]) {
     //        inet_ntop(AF_INET, &client.sin_addr, remote, INET_ADDRSTRLEN),
     //        ntohs(client.sin_port));
     char buffer[BUF_SIZE];
-    memset(buffer, '\0', BUF_SIZE-1);
-    ret = recv(connfd, buffer, BUF_SIZE-1, 0);
+    memset(buffer, '\0', BUF_SIZE - 1);
+    ret = recv(connfd, buffer, BUF_SIZE - 1, 0);
     printf("got %d bytes of nomal data '%s' \n", ret, buffer);
 
-    memset(buffer, '\0', BUF_SIZE-1);
-    ret = recv(connfd, buffer, BUF_SIZE-1, MSG_OOB);
+    memset(buffer, '\0', BUF_SIZE - 1);
+    ret = recv(connfd, buffer, BUF_SIZE - 1, MSG_OOB);
     printf("got %d bytes of oob data '%s' \n", ret, buffer);
 
-    memset(buffer, '\0', BUF_SIZE-1);
-    ret = recv(connfd, buffer, BUF_SIZE-1, 0);
+    memset(buffer, '\0', BUF_SIZE - 1);
+    ret = recv(connfd, buffer, BUF_SIZE - 1, 0);
     printf("got %d bytes of nomal data '%s' \n", ret, buffer);
 
     close(connfd);

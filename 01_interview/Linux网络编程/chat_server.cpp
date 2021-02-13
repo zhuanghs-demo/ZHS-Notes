@@ -105,10 +105,62 @@ void chat_server(int argc, char* argv[]) {
         fds[user_counter].events = POLLIN | POLLRDHUP | POLLERR;
         fds[user_counter].revents = 0;
         printf("comes s new user, now have %d users\n", user_counter);
+      } else if (fds[i].revents & POLLERR) {
+        printf("get an error from %d\n", fds[i].fd);
+        char errors[100];
+        memset(errors, '\0', 100);
+        socklen_t length = sizeof(errors);
+        if (getsockopt(fds[i].fd, SOL_SOCKET, SO_ERROR, &errors, &length) < 0) {
+          printf("get socket option failed\n");
+        }
+        continue;
+      } else if (fds[i].revents & POLLRDHUP) {
+        users[fds[i].fd] = users[fds[user_counter].fd];
+        close(fds[i].fd);
+        fds[i] = fds[user_counter];
+        i--;
+        user_counter--;
+        printf("a client left\n");
+      } else if (fds[i].revents & POLLIN) {
+        int connfd = fds[i].fd;
+        memset(users[connfd].buf, '\0', BUFFER_SIZE);
+        ret = recv(connfd, users[connfd].buf, BUFFER_SIZE - 1, 0);
+        printf("get %d bytes of client data %s from %d\n", ret,
+               users[connfd].buf, connfd);
+        if (ret < 0) {
+          if (errno != EAGAIN) {
+            close(connfd);
+            users[fds[i].fd] = users[fds[user_counter].fd];
+            fds[i] = fds[user_counter];
+            i--;
+            user_counter--;
+          }
+        } else if (ret == 0) {
+        } else {
+          for (int j = 1; j <= user_counter; ++j) {
+            if (fds[i].fd == connfd) {
+              continue;
+            }
+            fds[j].events |= ~POLLIN;
+            fds[j].events |= POLLOUT;
+            users[fds[j].fd].write_buf = users[connfd].buf;
+          }
+        }
+      } else if (fds[i].revents & POLLOUT) {
+        int connfd = fds[i].fd;
+        if (!users[connfd].write_buf) {
+          continue;
+        }
+        ret = send(connfd, users[connfd].write_buf,
+                   strlen(users[connfd].write_buf), 0);
+        users[connfd].write_buf = NULL;
+        fds[i].events |= ~POLLOUT;
+        fds[i].events |= POLLIN;
       }
     }
   }
 
+  delete[] users;
   close(listenfd);
   return;
 }
