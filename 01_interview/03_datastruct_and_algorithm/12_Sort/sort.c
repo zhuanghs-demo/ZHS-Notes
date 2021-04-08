@@ -5,7 +5,7 @@
  * @Author: Allen zhuang
  * @Date: 2020-11-28 16:48:07
  * @LastEditors: Allen Zhuang
- * @LastEditTime: 2021-04-08 15:55:57
+ * @LastEditTime: 2021-04-09 03:43:10
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 typedef int KeyType;
 
 //打印数组
-void printArray(int *pArr, int n) {
+void printArray(int* pArr, int n) {
   int i = 0;
   for (; i < n; ++i) {
     printf("%d\t", *(pArr + i));
@@ -28,7 +28,8 @@ void insertionSort(KeyType k[], int n) {
   for (i = 1; i < n; ++i) {
     tmp = k[i];
     j = i - 1;
-    while (j >= 0 && tmp < k[j]) k[j + 1] = k[j--];
+    while (j >= 0 && tmp < k[j])
+      k[j + 1] = k[j--];
     k[j + 1] = tmp;
   }
   return;
@@ -93,7 +94,7 @@ void shellsort(KeyType k[], int n) {
   }
 }
 
-void swap(KeyType *a, KeyType *b) {
+void swap(KeyType* a, KeyType* b) {
   KeyType tmp;
   tmp = *a;
   *a = *b;
@@ -107,9 +108,11 @@ void quicksort(KeyType k[], int s, int t) {
     i = s;
     j = t + 1;
     while (1) {
-      do i++;
+      do
+        i++;
       while (!(k[s] <= k[i] || i == t));
-      do j--;
+      do
+        j--;
       while (!(k[s] >= k[j] || j == s));
       if (i < j) {
         swap(&k[i], &k[j]);
@@ -124,6 +127,38 @@ void quicksort(KeyType k[], int s, int t) {
 }
 
 //堆排序
+void adjust(KeyType k[], int i, int n) {
+  int j;
+  KeyType tmp;
+  tmp = k[i];
+  j = 2 * i;
+  while (j <= n) {
+    if (j < n && k[j] < k[j + 1]) {
+      j++;
+    }
+    if (tmp >= k[j]) {
+      break;
+    }
+    k[j / 2] = k[j];
+    j = 2 * j;
+  }
+  k[j / 2] = tmp;
+}
+
+void heapsort(KeyType k[], int n) {
+  int i;
+  KeyType tmp;
+  for (i = (n - 1) / 2; i >= 0; --i) {
+    adjust(k, i, n - 1);
+  }
+
+  for (i = n - 1; i > 0; --i) {
+    tmp = k[i];
+    k[i] = k[0];
+    k[0] = tmp;
+    adjust(k, 0, i - 1);
+  }
+}
 
 //归并排序
 
@@ -135,7 +170,8 @@ void main() {
   // selectionsort(a, 10);
   // bubblesort(a, 10);
   // shellsort(a, 10);
-  quicksort(a, 0, 9);
+  // quicksort(a, 0, 9);
+  heapsort(a, 10);
   printf("The result of sorting for the array is:\n");
   printArray(a, 10);
   return;
