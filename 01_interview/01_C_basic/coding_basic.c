@@ -9,8 +9,12 @@
 /*编程基本功*/
 
 // #include <dirent.h> //文件夹
+#include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <windows.h>
 
 // 1.字符类型统计器
 // 【题目要求】请编写一个C程序，在终端用键盘输入字符串，以 Ctrl +
@@ -156,7 +160,139 @@ void demo06_pointer_as_function_para() {
 // 7.矩阵的转置运算
 // 【题目要求】用键盘从终端输入一个3 行
 // 4列的矩阵，编写一个函数对该矩阵进行转置操作。
-void demo07_matrix_transpose() {}
+void inuput_matrix(int (*a)[4], int n, int m) {
+  int i, j;
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < m; ++j) {
+      scanf("%d", *(a + i) + j);
+    }
+  }
+}
+
+void output_matrix(int (*b)[3], int n, int m) {
+  int i, j;
+  for (i = 0; i < m; ++i) {
+    for (j = 0; j < n; ++j) {
+      printf("%d\t", *(*(b + i) + j));
+    }
+    printf("\n");
+  }
+}
+
+void transpose_matrix(int (*a)[4], int (*b)[3]) {
+  int i, j;
+  for (i = 0; i < 3; ++i) {
+    for (j = 0; j < 4; ++j) {
+      b[j][i] = a[i][j];
+    }
+  }
+}
+
+void demo07_matrix_transpose() {
+  int a[3][4] = {0}, b[4][3] = {0};
+  printf("Please input the 3*4 matrix data:\n");
+  inuput_matrix(a, 3, 4);
+  transpose_matrix(a, b);
+  printf("The transpose matrix is:\n");
+  output_matrix(b, 3, 4);
+}
+
+void demo08_bit_swap() {
+  int a = 10, b = 5;
+  printf("Before swap : a=%d,b=%d\n", a, b);
+  a = a ^ b;
+  b = b ^ a;
+  a = a ^ b;
+  printf("After swap : a=%d,b=%d\n", a, b);
+}
+
+int bit_abs(int a) {
+  int i = a >> 31;
+  return ((a ^ i) - i);
+}
+
+void demo09_bit_abs() {
+  int a = -10;
+  printf("abs(a)=%d\n", bit_abs(a));
+}
+
+int bit_count(int a) {
+  int count = 0;
+  while (a) {
+    a &= (a - 1);
+    count++;
+  }
+  return count;
+}
+
+void demo10_bit_count() {
+  int a = 0x000000ab;
+  printf("num=%#010x\n", a);
+  char s[32];
+  itoa(a, s, 2);
+  printf("num=%032s\n", s);
+  int count = bit_count(a);
+  printf("bit_count:%d\n", count);
+}
+
+void demo11_file_read_write() {
+  char file_name[20];
+  char text1[20] = {'\0'}, text2[20] = {'\0'};
+  printf("Please input file name path:\n");
+  scanf("%s", file_name);
+  FILE* fp;
+  fp = fopen(file_name, "w");
+  const char* p = "Hello world!";
+  strcpy(text1, p);
+  int file_len = strlen(text1);
+  fwrite(text1, file_len, 1, fp);
+  printf("The file has been saved\n");
+  fclose(fp);
+  fp = NULL;
+  fp = fopen(file_name, "r");
+  if (fp) {
+    fread(text2, file_len, 1, fp);
+    printf("The content of th file:%s\n", text2);
+  }
+  fclose(fp);
+}
+
+void demo12_size_of_file() {
+  FILE* fp = NULL;
+  long size;
+  fp = fopen("hello1.txt", "r");
+  if (fp) {
+    fseek(fp, 0, SEEK_END);
+    size = ftell(fp);
+    printf("The length of the file is %d bytes\n", size);
+  }
+  fclose(fp);
+}
+
+void demo13_process_runtime() {
+  clock_t start, end;
+  int i;
+  start = clock();
+  Sleep(1000);
+  end = clock();
+  printf("The time was:%fl\n", (end - start) / CLK_TCK);
+}
+
+void demo14_decimal_to_bianary() {
+  int a = 15;
+  int r;
+  int i = 0;
+  int stack[32] = {0};
+  while (a) {
+    r = a % 2;
+    a /= 2;
+    stack[i++] = r;
+  }
+  for (i -= 1; i >= 0; --i) {
+    printf("%d", stack[i]);
+  }
+  printf("\n");
+}
 
 void main(int argc, char* argv[]) {
   //   demo01_calc_special_char();
@@ -164,6 +300,14 @@ void main(int argc, char* argv[]) {
   // demo03_if_else_use();
   // demo04_decode_test();
   // demo05_is_leap_year();
-  demo06_pointer_as_function_para();
+  // demo06_pointer_as_function_para();
+  // demo07_matrix_transpose();
+  // demo08_bit_swap();
+  // demo09_bit_abs();
+  // demo10_bit_count();
+  // demo11_file_read_write();
+  // demo12_size_of_file();
+  // demo13_process_runtime();
+  demo14_decimal_to_bianary();
   return;
 }
