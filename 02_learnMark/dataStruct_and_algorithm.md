@@ -34,3 +34,20 @@
 
 2.两种存储结构：顺序存储结构和链式存储结构
 
+3.静态链表![image-20210519150910625](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519150910625.png)
+
+​	1）优点：在插入和删除时，只需要修改游标，不需要移动元素，从而改进了在顺序存储结构中的插入和删除操作需要移动大量元素的缺点
+
+​	2）缺点：没有解决连续存储分配带来的表长难以缺点的问题；失去了顺序存储结构随机存取的特性
+
+4.循环链表
+
+![image-20210519151940334](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519151940334.png)
+
+5.双向链表 双指针prior next![image-20210519152144074](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519152144074.png)
+
+6.总结
+
+# 栈与队列
+
+1.
