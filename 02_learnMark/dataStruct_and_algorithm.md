@@ -50,4 +50,28 @@
 
 # 栈与队列
 
-1.
+1.栈是限定仅在表尾进行插入和删除操作的线性表；
+
+2.队列是只允许在一端进行插入操作，而在另一端进行删除操作的线性表
+
+3.两栈共享空间![image-20210521113040852](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210521113040852.png)
+
+4.顺序栈和链栈的实现和区别
+
+5.栈的典型应用：递归和逆波兰表达式
+
+6.循环队列Q 队头front   队尾rear  (顺序队列)
+
+​	队列空：Q->front == Q->rear
+
+​	队列满：(Q->rear+1)%size == Q->front
+
+​	队列长度：(Q->rear - Q->front + size)%size
+
+7.链队列
+
+# 串
+
+1.串是由零个或多个字符串组成的有限序列，又名字符串
+
+2.KMP字符串匹配算法  next数组 nextval数组
