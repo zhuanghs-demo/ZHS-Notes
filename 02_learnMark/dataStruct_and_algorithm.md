@@ -34,7 +34,9 @@
 
 2.两种存储结构：顺序存储结构和链式存储结构
 
-3.静态链表![image-20210519150910625](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519150910625.png)
+3.静态链表
+
+<img src="https://i.loli.net/2021/07/20/bQKDtRkMnEfAyIV.png"/>
 
 ​	1）优点：在插入和删除时，只需要修改游标，不需要移动元素，从而改进了在顺序存储结构中的插入和删除操作需要移动大量元素的缺点
 
@@ -42,9 +44,11 @@
 
 4.循环链表
 
-![image-20210519151940334](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519151940334.png)
+<img src="https://i.loli.net/2021/07/20/wsMbW6aiNPpLRIS.png"/>
 
-5.双向链表 双指针prior next![image-20210519152144074](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210519152144074.png)
+5.双向链表 双指针prior next
+
+<img src="https://i.loli.net/2021/07/20/QcK1buxU7eX8jN6.png"/>
 
 6.总结
 
@@ -54,7 +58,9 @@
 
 2.队列是只允许在一端进行插入操作，而在另一端进行删除操作的线性表
 
-3.两栈共享空间![image-20210521113040852](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210521113040852.png)
+3.两栈共享空间
+
+<img src="https://i.loli.net/2021/07/20/1nx7z5SOyDoNecL.png"/>
 
 4.顺序栈和链栈的实现和区别
 
@@ -84,11 +90,11 @@
 
 1).双亲孩子表示法
 
-![image-20210603162645737](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210603162645737.png)
+<img src="https://i.loli.net/2021/07/20/qVwC7cgMjaJn3iY.png"/>
 
 2).孩子兄弟表示法（转化为类二叉树的形式）
 
-![image-20210603163045785](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20210603163045785.png)
+<img src="https://i.loli.net/2021/07/20/eaKwT2ZlYI8qJ3n.png"/>
 
 3.二叉树（Binary Tree）是 n （n≥0）个结点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根结点和两棵互不相交的、分别称为根结点的左子树和右子树的二叉树组成。
 
@@ -96,9 +102,9 @@
 
 5.二叉树的性质：
 
-​	(1).性质 1∶ 在二叉树的第i层上至多有![img](file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml7200\wps1.png)个结点（i>1）。
+​	(1).性质 1∶ 在二叉树的第i层上至多有![](https://i.loli.net/2021/07/21/Q3JiDbnBfOqaphj.png)个结点（i>1)。
 
-​	(2).性质2∶ 深度为k的二叉树至多有![img](file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml7200\wps3.png)-1个结点（k≥1）。 
+​	(2).性质2∶ 深度为k的二叉树至多有个![](https://i.loli.net/2021/07/21/iJmeE5zH4Wb1gkQ.png)结点（k≥1)。 
 
 ​	(3)性质 3∶ 对任何一棵二叉树 T，如果其终端结点数为 n，度为 2 的结点数为 n2， 则n0=n2+1。 
 
